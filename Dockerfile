@@ -19,6 +19,7 @@ WORKDIR /home/tough-rate
 COPY . /home/tough-rate
 RUN npm install
 
+RUN mkdir -p log
 CMD ["supervisord", "-n"]
 
 # 127.0.0.1:5700/tcp -- Supervisord
