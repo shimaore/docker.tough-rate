@@ -5,6 +5,7 @@ Generate the configuration
     fs = Promise.promisifyAll require 'fs'
 
     run = (filename) ->
+      console.log "Configuring from #{filename} ."
       fs.readFileAsync filename
       .then (content) ->
         options = JSON.parse content
