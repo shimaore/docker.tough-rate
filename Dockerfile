@@ -14,9 +14,10 @@ COPY conf/ /usr/local/freeswitch/conf
 
 # tough-rate installation
 RUN useradd -m tough-rate
+COPY . /home/tough-rate
+RUN chown -R tough-rate.tough-rate /home/tough-rate
 USER tough-rate
 WORKDIR /home/tough-rate
-COPY . /home/tough-rate
 RUN npm install
 
 RUN mkdir -p log

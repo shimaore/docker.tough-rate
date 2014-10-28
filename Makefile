@@ -1,7 +1,7 @@
 NAME=shimaore/tough-rate
 
-all:
+image:
 	docker build -t ${NAME} .
 
-push:
+push: image
 	docker push ${NAME}
