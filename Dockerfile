@@ -18,8 +18,8 @@ COPY . /home/tough-rate
 RUN chown -R tough-rate.tough-rate /home/tough-rate
 USER tough-rate
 WORKDIR /home/tough-rate
-RUN npm install
 RUN mkdir -p log
+RUN npm install
 
 # Cleanup
 RUN npm cache clean
