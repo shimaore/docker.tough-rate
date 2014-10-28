@@ -4,10 +4,10 @@ MAINTAINER Stéphane Alnet <stephane@shimaore.net>
 
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    nodejs-legacy npm \
+    nodejs-legacy \
     supervisor
-RUN apt-get autoremove -y
-RUN apt-get clean
+RUN apt-get install -y --no-install-recommends \
+    npm build-essential
 
 # FreeSwitch configuration
 COPY conf/ /usr/local/freeswitch/conf
@@ -19,8 +19,17 @@ RUN chown -R tough-rate.tough-rate /home/tough-rate
 USER tough-rate
 WORKDIR /home/tough-rate
 RUN npm install
-
 RUN mkdir -p log
+
+# Cleanup
+RUN npm cache clean
+USER root
+RUN apt-get purge -y \
+    npm build-essential
+RUN apt-get autoremove -y
+RUN apt-get clean
+
+USER tough-rate
 CMD ["supervisord", "-n"]
 
 # 127.0.0.1:5700/tcp -- Supervisord
