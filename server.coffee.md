@@ -1,7 +1,7 @@
     PouchDB = require 'pouchdb'
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
-    {GatewayManager,CallServer} = require '.'
+    {GatewayManager,CallServer} = require 'tough-rate'
 
     options = null
     provisioning = null
@@ -25,7 +25,7 @@
       options.gateway_manager.init()
 
       options.router = new Router options
-      options.router.plugin require './plugin-registrant'
+      options.router.plugin require 'tough-rate/plugin-registrant'
 
     .then ->
       new CallServer options.port, options
