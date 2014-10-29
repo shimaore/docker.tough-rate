@@ -8,9 +8,9 @@
     run = (filename) ->
       console.log "Configuring from #{filename} ."
       options = null
-      users = new PouchDB "#{options.prefix_admin}/_users"
-      prov = new PouchDB "#{options.prefix_admin}/provisioning"
-      replicator = new PouchDB "#{options.prefix_admin}/_replicator"
+      users = null
+      prov = null
+      replicator = null
 
       fs.readFileAsync filename
       .then (content) ->
@@ -36,6 +36,11 @@ Configure CouchDB
 =================
 
       .then ->
+        users = new PouchDB "#{options.prefix_admin}/_users"
+        prov = new PouchDB "#{options.prefix_admin}/provisioning"
+        replicator = new PouchDB "#{options.prefix_admin}/_replicator"
+        true
+      .then ->
         users.get 'org.couchdb.user:tough-rate'
       .catch ->
         {}
@@ -47,6 +52,7 @@ Configure CouchDB
         users.put doc
 
       .catch (error) ->
+        console.error error
         console.log "User creation failed."
         throw error
 
@@ -54,24 +60,27 @@ Configure CouchDB
         prov.put GatewayManager.couch
 
       .catch (error) ->
+        console.error error
         console.log "Inserting GatewayManager couchapp failed."
-        throw error
+        # Do not throw since we don't handle _rev -- FIXME
 
       .then ->
         replicator.get 'provisioning from master'
       .catch -> {}
       .then (doc) ->
         source = url.parse options.source_provisioning
+        auth = (new Buffer source.auth).toString 'base64'
         doc._id ?= 'provisioning from master'
         doc.source ?=
-          url: "#{url.protocol}//#{url.host}#{url.path}"
+          url: "#{source.protocol}//#{source.host}#{source.path}"
           headers:
-            Authorization: "Basic #{(new Buffer url.auth).toString 'base64'}"
+            Authorization: "Basic #{auth}"
         doc.target ?= 'provisioning'
         doc.continuous ?= true
         replicator.put doc
 
       .catch (error) ->
+        console.error error
         console.log "Replication from #{options.source_provisioning} failed."
         throw error
 
@@ -94,6 +103,7 @@ Configure CouchDB
     if module is require.main
       run process.argv[2]
       .catch (error) ->
+        console.error error
         console.log "Configuration failed."
         process.exit 1
     else
