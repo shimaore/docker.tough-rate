@@ -37,15 +37,27 @@ Configure CouchDB
           password:'tough-rate-password'
           roles:['provisioning_reader']
 
+      .catch (error) ->
+        console.log "User creation failed."
+        throw error
+
       .then ->
 
         prov = new PouchDB "#{options.prefix_admin}/provisioning"
         prov.put GatewayManager.couch
 
+      .catch (error) ->
+        console.log "Inserting GatewayManager couchapp failed."
+        throw error
+
       .then ->
 
         prov = new PouchDB "#{options.prefix_admin}/provisioning"
         prov.replicate.from options.source_provisioning
+
+      .catch (error) ->
+        console.log "Starting replication failed."
+        throw error
 
       .then ->
         console.log "Configured."
