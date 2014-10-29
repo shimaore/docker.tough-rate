@@ -1,7 +1,7 @@
+    PouchDB = require 'pouchdb'
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
-
-    PouchDB = require 'pouchdb'
+    {GatewayManager} = require 'tough-rate'
 
     run = (filename) ->
       console.log "Configuring from #{filename} ."
@@ -36,6 +36,11 @@ Configure CouchDB
           name:'tough-rate'
           password:'tough-rate-password'
           roles:['provisioning_reader']
+
+      .then ->
+
+        prov = new PouchDB "#{options.prefix_admin}/provisioning"
+        prov.put GatewayManager.couch
 
       .then ->
 

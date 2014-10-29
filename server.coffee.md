@@ -18,11 +18,10 @@
           database: new PouchDB doc.database
       options.statistics = require 'winston'
 
-      provisioning.put GatewayManager.couch
-
-    .then ->
       options.gateway_manager = new GatewayManager provisioning, options.sip_domain_name
       options.gateway_manager.init()
+
+    .then ->
 
       options.router = new Router options
       options.router.plugin require 'tough-rate/plugin-registrant'
