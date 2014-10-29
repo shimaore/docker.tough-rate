@@ -1,6 +1,7 @@
     PouchDB = require 'pouchdb'
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
+    supervisord = Promise.promisifyAll require 'supervisord'
     {GatewayManager} = require 'tough-rate'
 
     run = (filename) ->
@@ -61,6 +62,19 @@ Configure CouchDB
 
       .then ->
         console.log "Configured."
+
+      .then ->
+        client = supervisord.connect 'http://127.0.0.1:5700'
+        client.startProcess 'tough-rate'
+      .then ->
+        console.log "Started tough-rate"
+
+      .then ->
+        client = supervisord.connect 'http://127.0.0.1:5700'
+        client.startProcess 'freeswitch'
+      .then ->
+        console.log "Started FreeSwitch"
+
 
     if module is require.main
       run process.argv[2]
