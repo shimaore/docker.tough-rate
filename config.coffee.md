@@ -2,6 +2,7 @@
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
     supervisord = Promise.promisifyAll require 'supervisord'
+    url = require 'url'
     {GatewayManager} = require 'tough-rate'
 
     run = (filename) ->
@@ -53,11 +54,24 @@ Configure CouchDB
 
       .then ->
 
-        prov = new PouchDB "#{options.prefix_admin}/provisioning"
-        prov.replicate.from options.source_provisioning
+        replicator = new PouchDB "#{options.prefix_admin}/_replicator"
+        replicator.delete 'provisioning from master'
+      .catch -> true
+      .then ->
+        replicator = new PouchDB "#{options.prefix_admin}/_replicator"
+        source = url.parse options.source_provisioning
+        replicator.put
+          _id:'provisioning from master'
+          source:
+            url: "#{url.protocol}//#{url.host}#{url.path}"
+            headers:
+              Authorization: "Basic #{(new Buffer url.auth).toString 'base64'}"
+          target:
+            'provisioning'
+          continuous: true
 
       .catch (error) ->
-        console.log "Starting replication failed."
+        console.log "Replication from #{options.source_provisioning} failed."
         throw error
 
       .then ->
@@ -80,6 +94,6 @@ Configure CouchDB
       run process.argv[2]
       .catch (error) ->
         console.log "Configuration failed."
-        throw error
+        process.exit 1
     else
       module.exports = run
