@@ -52,5 +52,8 @@ Configure CouchDB
 
     if module is require.main
       run process.argv[2]
+      .catch (error) ->
+        console.log "Configuration failed."
+        throw error
     else
       module.exports = run

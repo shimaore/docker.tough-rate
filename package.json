@@ -8,7 +8,7 @@
     "bluebird": "^2.3.6",
     "coffee-script": "^1.8.0",
     "pouchdb": "^3.0.6",
-    "tough-rate": "^1.1.2",
+    "tough-rate": "^1.1.4",
     "winston": "^0.8.1"
   }
 }

@@ -21,6 +21,10 @@
       options.gateway_manager = new GatewayManager provisioning, options.sip_domain_name
       options.gateway_manager.init()
 
+    .catch (error) ->
+      console.log "Gateway Manager init failed"
+      throw error
+
     .then ->
 
       options.router = new Router options
