@@ -11,6 +11,11 @@
       fs.readFileAsync filename
       .then (content) ->
         options = JSON.parse content
+      .catch (error) ->
+        statistics.error error
+        statistics.log "Unable to get options from #{filename}"
+        throw error
+      .then ->
         provisioning = new PouchDB options.provisioning
         options.provisioning = provisioning
         options.ruleset_of = (x) ->
