@@ -42,6 +42,12 @@ Configure CouchDB
         replicator = new PouchDB "#{options.prefix_admin}/_replicator"
         true
       .then ->
+        prov.info()
+      .catch (error) ->
+        console.error error
+        console.log "Unable to create local provisioning database"
+        throw error
+      .then ->
         users.get 'org.couchdb.user:tough-rate'
       .catch (error) ->
         console.error error
@@ -91,7 +97,6 @@ Configure CouchDB
             Authorization: "Basic #{auth}"
         doc.target ?= 'provisioning'
         doc.continuous ?= true
-        doc.create_target ?= true
         doc.filter ?= 'host/replication'
         doc.query_params ?=
           sip_domain_name: options.sip_domain_name
