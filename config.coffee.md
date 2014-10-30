@@ -56,6 +56,7 @@ Configure CouchDB
       .then (doc) ->
         doc._id ?= "org.couchdb.user:tough-rate"
         doc.name ?= 'tough-rate'
+        doc.type ?= 'user'
         doc.password ?= 'tough-rate-password'
         doc.roles ?= ['provisioning_reader']
         users.put doc
