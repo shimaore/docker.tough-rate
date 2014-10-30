@@ -11,6 +11,7 @@
       users = null
       prov = null
       replicator = null
+      supervisor = null
 
       fs.readFileAsync filename
       .then (content) ->
@@ -101,14 +102,13 @@ Configure CouchDB
         console.log "Configured."
 
       .then ->
-        client = supervisord.connect 'http://127.0.0.1:5700'
-        client.startProcess 'tough-rate'
+        supervisor = Promise.promisifyAll supervisord.connect 'http://127.0.0.1:5700'
+        supervisor.startProcessAsync 'tough-rate'
       .then ->
         console.log "Started tough-rate"
 
       .then ->
-        client = supervisord.connect 'http://127.0.0.1:5700'
-        client.startProcess 'freeswitch'
+        supervisor.startProcessAsync 'freeswitch'
       .then ->
         console.log "Started FreeSwitch"
 
