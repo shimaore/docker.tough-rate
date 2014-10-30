@@ -1,3 +1,4 @@
+    Promise = require 'bluebird'
     chai = require 'chai'
     chai.should()
     require 'chai-as-promised'

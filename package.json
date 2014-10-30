@@ -4,6 +4,9 @@
   "description": "A Docker.io image to run FreeSwitch with a tough-rate LCR engine.",
   "author": "Stéphane Alnet <stephane@shimaore.net> (http://stephane.shimaore.net/)",
   "license": "Unlicense",
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "bluebird": "^2.3.6",
     "coffee-script": "^1.8.0",
@@ -11,5 +14,10 @@
     "supervisord": "0.0.4",
     "tough-rate": "^1.1.4",
     "winston": "^0.8.1"
+  },
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "chai-as-promised": "^4.1.1",
+    "mocha": "^2.0.1"
   }
 }
