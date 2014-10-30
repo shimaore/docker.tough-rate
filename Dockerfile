@@ -13,10 +13,10 @@ RUN apt-get install -y --no-install-recommends \
 COPY conf/ /usr/local/freeswitch/conf
 
 # tough-rate installation
-RUN useradd -m tough-rate
+RUN mkdir -p /home/tough-rate
 COPY . /home/tough-rate
-RUN chown -R tough-rate.tough-rate /home/tough-rate
-USER tough-rate
+RUN chown -R freeswitch.freeswitch /home/tough-rate
+USER freeswitch
 WORKDIR /home/tough-rate
 RUN mkdir -p log
 RUN npm install
@@ -29,7 +29,7 @@ RUN apt-get purge -y \
 RUN apt-get autoremove -y
 RUN apt-get clean
 
-USER tough-rate
+USER freeswitch
 CMD ["supervisord", "-n"]
 
 # 127.0.0.1:5700/tcp -- Supervisord
