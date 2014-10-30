@@ -4,17 +4,10 @@
     {GatewayManager,CallServer,Router} = require 'tough-rate'
     statistics = require 'winston'
 
-    run = (filename) ->
-      options = null
+    run = (options) ->
       provisioning = null
 
-      fs.readFileAsync filename
-      .then (content) ->
-        options = JSON.parse content
-      .catch (error) ->
-        statistics.error error
-        statistics.log "Unable to get options from #{filename}"
-        throw error
+      Promise.resolve()
       .then ->
         provisioning = new PouchDB options.provisioning
         options.provisioning = provisioning
@@ -43,10 +36,14 @@
         new CallServer options.port, options
 
     if module is require.main
-      run process.argv[2]
+      fs.readFileAsync process.argv[2]
+      .then (content) ->
+        JSON.parse content
+      .then (options) ->
+        run options
       .catch (error) ->
-        console.error error
-        console.log "Server failed."
+        statistics.error error
+        statistics.log "Server failed."
         throw error
     else
       module.exports = run

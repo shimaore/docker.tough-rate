@@ -9,7 +9,8 @@
 
     it 'should write proper ACLS', ->
       run = require '../config.coffee.md'
-      run '../local/example.json'
+      options = require '../local/example.json'
+      run options
       .then ->
         fs.readFileAsync '../conf/acl.conf.xml', 'utf-8'
         .should.eventually.equal '<list name="default" default="deny"><node type="allow" cidr="172.17.42.0/8" /></list>\n'

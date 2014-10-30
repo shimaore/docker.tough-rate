@@ -5,21 +5,19 @@
     url = require 'url'
     {GatewayManager} = require 'tough-rate'
 
-    run = (filename) ->
-      console.log "Configuring from #{filename} ."
-      options = null
+    run = (options) ->
+      console.log "Configuring from #{options} ."
       users = null
       prov = null
       replicator = null
       supervisor = null
 
-      fs.readFileAsync filename
-      .then (content) ->
-        options = JSON.parse content
+      Promise.resolve()
 
 Generate the configuration for FreeSwitch
 =========================================
 
+      .then ->
         acls = ''
         for name, value of options.acls
           acls += """
@@ -124,7 +122,11 @@ Configure CouchDB
 
 
     if module is require.main
-      run process.argv[2]
+      fs.readFileAsync process.argv[2]
+      .then (content) ->
+        JSON.parse content
+      .then (options) ->
+        run options
       .catch (error) ->
         console.error error
         console.log "Configuration failed."
