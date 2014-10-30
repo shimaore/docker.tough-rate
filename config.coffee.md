@@ -91,6 +91,10 @@ Configure CouchDB
             Authorization: "Basic #{auth}"
         doc.target ?= 'provisioning'
         doc.continuous ?= true
+        doc.create_target ?= true
+        doc.filter ?= 'host/replication'
+        doc.query_params ?=
+          sip_domain_name: options.sip_domain_name
         replicator.put doc
 
       .catch (error) ->
