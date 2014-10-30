@@ -44,6 +44,7 @@ Configure CouchDB
         users.get 'org.couchdb.user:tough-rate'
       .catch (error) ->
         console.error error
+        console.error '(ignored)'
         {}
       .then (doc) ->
         doc._id ?= "org.couchdb.user:tough-rate"
@@ -58,17 +59,26 @@ Configure CouchDB
         throw error
 
       .then ->
-        prov.put GatewayManager.couch
+        prov.get GatewayManager.couch._id
+      .catch (error) ->
+        console.error error
+        console.log '(ignored)'
+        {}
+      .then ({_rev}) ->
+        doc = GatewayManager.couch
+        doc._rev = _rev
+        prov.put doc
 
       .catch (error) ->
         console.error error
         console.log "Inserting GatewayManager couchapp failed."
-        # Do not throw since we don't handle _rev -- FIXME
+        throw error
 
       .then ->
         replicator.get 'provisioning from master'
       .catch (error) ->
         console.error error
+        console.error '(ignored)'
         {}
       .then (doc) ->
         source = url.parse options.source_provisioning
