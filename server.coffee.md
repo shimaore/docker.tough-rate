@@ -1,7 +1,7 @@
     PouchDB = require 'pouchdb'
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
-    {GatewayManager,CallServer} = require 'tough-rate'
+    {GatewayManager,CallServer,Router} = require 'tough-rate'
     statistics = require 'winston'
 
     run = (filename) ->
@@ -19,6 +19,7 @@
             ruleset: doc
             database: new PouchDB doc.database
         options.statistics = statistics
+        options.respond ?= true
 
         options.gateway_manager = new GatewayManager provisioning, options.sip_domain_name, {statistics}
         options.gateway_manager.init()
