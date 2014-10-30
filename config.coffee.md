@@ -42,7 +42,8 @@ Configure CouchDB
         true
       .then ->
         users.get 'org.couchdb.user:tough-rate'
-      .catch ->
+      .catch (error) ->
+        console.error error
         {}
       .then (doc) ->
         doc._id ?= "org.couchdb.user:tough-rate"
@@ -66,7 +67,9 @@ Configure CouchDB
 
       .then ->
         replicator.get 'provisioning from master'
-      .catch -> {}
+      .catch (error) ->
+        console.error error
+        {}
       .then (doc) ->
         source = url.parse options.source_provisioning
         auth = (new Buffer source.auth).toString 'base64'
