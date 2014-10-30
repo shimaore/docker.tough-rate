@@ -2,6 +2,7 @@
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
     {GatewayManager,CallServer} = require 'tough-rate'
+    statistics = require 'winston'
 
     run = (filename) ->
       options = null
@@ -17,9 +18,9 @@
           .then (doc) ->
             ruleset: doc
             database: new PouchDB doc.database
-        options.statistics = require 'winston'
+        options.statistics = statistics
 
-        options.gateway_manager = new GatewayManager provisioning, options.sip_domain_name
+        options.gateway_manager = new GatewayManager provisioning, options.sip_domain_name, {statistics}
         options.gateway_manager.init()
 
       .catch (error) ->
