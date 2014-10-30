@@ -23,6 +23,7 @@
         options.gateway_manager.init()
 
       .catch (error) ->
+        console.error error
         console.log "Gateway Manager init failed"
         throw error
 
@@ -37,6 +38,7 @@
     if module is require.main
       run process.argv[2]
       .catch (error) ->
+        console.error error
         console.log "Server failed."
         throw error
     else
