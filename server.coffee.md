@@ -16,6 +16,10 @@
           .then (doc) ->
             ruleset: doc
             database: new PouchDB doc.database
+          .catch (error) ->
+            statistics.error error
+            statistics.log "Could not locate information for ruleset #{x}."
+            {}
         options.statistics = statistics
         options.respond ?= true
 
