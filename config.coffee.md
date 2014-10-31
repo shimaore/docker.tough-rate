@@ -106,6 +106,9 @@ Configure CouchDB
 
       .catch (error) ->
         console.error error
+        if error.status? and error.status is 403
+          console.log "Replication already started"
+          return
         console.log "Replication from #{options.source_provisioning} failed."
         throw error
 
