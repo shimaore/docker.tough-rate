@@ -6,5 +6,8 @@ image:
 image-no-cache:
 	docker build --no-cache -t ${NAME} .
 
-push: image
+tests:
+	# npm test
+
+push: image tests
 	docker push ${NAME}
