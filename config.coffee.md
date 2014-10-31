@@ -99,6 +99,9 @@ Configure CouchDB
         doc.filter ?= 'host/replication'
         doc.query_params ?=
           sip_domain_name: options.sip_domain_name
+        delete doc._replication_state
+        delete doc._replication_state_time
+        delete doc._replication_id
         replicator.put doc
 
       .catch (error) ->
