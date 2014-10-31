@@ -12,7 +12,7 @@
         provisioning = new PouchDB options.provisioning
         options.provisioning = provisioning
         options.ruleset_of = (x) ->
-          provisioning.get "ruleset:#{sip_domain_name}:#{x}"
+          provisioning.get "ruleset:#{options.sip_domain_name}:#{x}"
           .then (doc) ->
             ruleset: doc
             database: new PouchDB doc.database
