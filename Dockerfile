@@ -13,12 +13,14 @@ RUN apt-get install -y --no-install-recommends \
 COPY conf/ /usr/local/freeswitch/conf
 
 # tough-rate installation
-RUN mkdir -p /home/tough-rate
-COPY . /home/tough-rate
-RUN chown -R freeswitch.freeswitch /home/tough-rate
+RUN mkdir -p /opt/tough-rate
+COPY . /opt/tough-rate
+RUN chown -R freeswitch.freeswitch /opt/tough-rate
 USER freeswitch
-WORKDIR /home/tough-rate
-RUN mkdir -p log
+WORKDIR /opt/tough-rate
+RUN mkdir -p \
+  log \
+  local
 RUN npm install
 
 # Cleanup
