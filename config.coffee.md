@@ -12,6 +12,39 @@
       replicator = null
       supervisor = null
 
+      replicate = (name,extensions) ->
+        replicator.get "#{name} from master"
+        .catch (error) ->
+          console.error error
+          console.error '(ignored)'
+          {}
+        .then (doc) ->
+          source = url.parse options.prefix_source
+          auth = (new Buffer source.auth).toString 'base64'
+          doc._id ?= "#{name} from master"
+          doc.source ?=
+            url: url.format
+              protocol: source.protocol
+              host: source.host
+              pathname: name
+            headers:
+              Authorization: "Basic #{auth}"
+          doc.target ?= name
+          doc.continuous ?= true
+          extensions? doc
+          delete doc._replication_state
+          delete doc._replication_state_time
+          delete doc._replication_id
+          replicator.put doc
+
+        .catch (error) ->
+          console.error error
+          if error.status? and error.status is 403
+            console.log "Replication already started"
+            return
+          console.log "Replication from #{options.prefix_source}/#{name} failed."
+          throw error
+
       Promise.resolve()
 
 Generate the configuration for FreeSwitch
@@ -81,36 +114,11 @@ Configure CouchDB
         throw error
 
       .then ->
-        replicator.get 'provisioning from master'
-      .catch (error) ->
-        console.error error
-        console.error '(ignored)'
-        {}
-      .then (doc) ->
-        source = url.parse options.source_provisioning
-        auth = (new Buffer source.auth).toString 'base64'
-        doc._id ?= 'provisioning from master'
-        doc.source ?=
-          url: "#{source.protocol}//#{source.host}#{source.path}"
-          headers:
-            Authorization: "Basic #{auth}"
-        doc.target ?= 'provisioning'
-        doc.continuous ?= true
-        doc.filter ?= 'host/replication'
-        doc.query_params ?=
-          sip_domain_name: options.sip_domain_name
-        delete doc._replication_state
-        delete doc._replication_state_time
-        delete doc._replication_id
-        replicator.put doc
+        replicate 'provisioning', (doc) ->
+          doc.filter ?= 'host/replication'
+          doc.query_params ?=
+            sip_domain_name: options.sip_domain_name
 
-      .catch (error) ->
-        console.error error
-        if error.status? and error.status is 403
-          console.log "Replication already started"
-          return
-        console.log "Replication from #{options.source_provisioning} failed."
-        throw error
 
       .then ->
         console.log "Configured."
