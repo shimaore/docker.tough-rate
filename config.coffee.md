@@ -119,6 +119,21 @@ Configure CouchDB
           doc.query_params ?=
             sip_domain_name: options.sip_domain_name
 
+      .then ->
+        prov.allDocs
+          startkey: 'ruleset:'
+          endkey: 'ruleset;'
+          include_docs: true
+
+      .then ({rows}) ->
+        it = Promise.resolve()
+        for row in rows when row.doc?.database?
+          do (row) ->
+            it = it.then ->
+              console.log "Going to replicate #{row.doc.database}"
+              replicate row.doc.database
+
+        it
 
       .then ->
         console.log "Configured."
