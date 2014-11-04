@@ -9,6 +9,7 @@
       provisioning = null
       assert options.provisioning?, 'Missing `provisioning` option.'
       assert options.sip_domain_name?, 'Missing `sip_domain_name` option.'
+      assert options.prefix_local?, 'Missing `prefix_local` option.'
 
       Promise.resolve()
       .then ->
@@ -20,7 +21,7 @@
             assert doc.database?, "Ruleset #{options.sip_domain_name}:#{x} should have a database field."
             data =
               ruleset: doc
-              database: new PouchDB doc.database
+              database: new PouchDB "#{options.prefix_local}/#{doc.database}"
 
 We _must_ return an object. The router will detect no data is present and report via SIP.
 
