@@ -13,7 +13,16 @@
       supervisor = null
 
       replicate = (name,extensions) ->
-        replicator.get "#{name} from master"
+        Promise.resolve()
+        .then ->
+          target = new PouchDB "#{options.prefix_admin}/#{name}"
+          target.info()
+        .catch (error) ->
+          console.error error
+          console.log "Unable to create local #{name} database"
+          throw error
+        .then ->
+          replicator.get "#{name} from master"
         .catch (error) ->
           console.error error
           console.error '(ignored)'
@@ -31,7 +40,6 @@
               Authorization: "Basic #{auth}"
           doc.target ?= name
           doc.continuous ?= true
-          doc.create_target ?= true
           extensions? doc
           delete doc._replication_state
           delete doc._replication_state_time
