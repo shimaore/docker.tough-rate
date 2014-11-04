@@ -31,6 +31,7 @@
               Authorization: "Basic #{auth}"
           doc.target ?= name
           doc.continuous ?= true
+          doc.create_target ?= true
           extensions? doc
           delete doc._replication_state
           delete doc._replication_state_time
