@@ -120,7 +120,8 @@ Configure CouchDB
             sip_domain_name: options.sip_domain_name
 
       .then ->
-        prov.allDocs
+        source = new PouchDB "#{options.prefix_source}/provisioning"
+        source.allDocs
           startkey: "ruleset:#{options.sip_domain_name}:"
           endkey: "ruleset:#{options.sip_domain_name};"
           include_docs: true
