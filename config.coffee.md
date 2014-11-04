@@ -120,7 +120,12 @@ Configure CouchDB
             sip_domain_name: options.sip_domain_name
 
       .then ->
-        source = new PouchDB "#{options.prefix_source}/provisioning"
+        parsed = url.parse options.prefix_source
+        console.log "Auth: #{parsed.auth}"
+        source = new PouchDB "#{options.prefix_source}/provisioning", ajax:
+          auth:
+            user: parsed.auth.split(':')[0]
+            pass: parsed.auth.split(':')[1]
         source.allDocs
           startkey: "ruleset:#{options.sip_domain_name}:"
           endkey: "ruleset:#{options.sip_domain_name};"
