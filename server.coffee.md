@@ -3,6 +3,7 @@
     fs = Promise.promisifyAll require 'fs'
     {GatewayManager,CallServer,Router} = require 'tough-rate'
     statistics = require 'winston'
+    assert = require 'assert'
 
     run = (options) ->
       provisioning = null
