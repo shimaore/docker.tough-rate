@@ -121,11 +121,12 @@ Configure CouchDB
 
       .then ->
         prov.allDocs
-          startkey: 'ruleset:'
-          endkey: 'ruleset;'
+          startkey: "ruleset:#{options.sip_domain_name}:"
+          endkey: "ruleset:#{options.sip_domain_name};"
           include_docs: true
 
       .then ({rows}) ->
+        console.log JSON.stringify rows
         it = Promise.resolve()
         for row in rows when row.doc?.database?
           do (row) ->
