@@ -6,6 +6,8 @@
 
     run = (options) ->
       provisioning = null
+      assert options.provisioning?, 'Missing `provisioning` option.'
+      assert options.sip_domain_name?, 'Missing `sip_domain_name` option.'
 
       Promise.resolve()
       .then ->
@@ -14,12 +16,18 @@
         options.ruleset_of = (x) ->
           provisioning.get "ruleset:#{options.sip_domain_name}:#{x}"
           .then (doc) ->
-            ruleset: doc
-            database: new PouchDB doc.database
+            assert doc.database?, "Ruleset #{options.sip_domain_name}:#{x} should have a database field."
+            data =
+              ruleset: doc
+              database: new PouchDB doc.database
+
+We _must_ return an object. The router will detect no data is present and report via SIP.
+
           .catch (error) ->
             statistics.error error
             statistics.log "Could not locate information for ruleset #{x}."
             {}
+
         options.statistics = statistics
         options.respond ?= true
 
