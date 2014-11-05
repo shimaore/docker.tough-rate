@@ -27,7 +27,7 @@ We _must_ return an object. The router will detect no data is present and report
 
           .catch (error) ->
             statistics.error error
-            statistics.log "Could not locate information for ruleset #{x}."
+            statistics.log "Could not locate information for ruleset #{x} in #{options.sip_domain_name}."
             {}
 
         options.statistics = statistics
