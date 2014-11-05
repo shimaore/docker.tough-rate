@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     build-essential \
     npm
+RUN apt-get clean
 
 # FreeSwitch configuration
 COPY conf/ /usr/local/freeswitch/conf
@@ -29,13 +30,11 @@ RUN npm install
 # Cleanup
 RUN npm cache clean
 USER root
-RUN apt-get clean
 # RUN apt-get autoclean
 # RUN apt-get purge -y \
 #     build-essential \
 #     npm
 # RUN apt-get autoremove -y
-RUN ls -l /bin/sh
 
 USER freeswitch
 CMD ["supervisord", "-n"]
