@@ -25,11 +25,10 @@ WORKDIR /opt/tough-rate
 RUN mkdir -p \
   log \
   local
-RUN npm install
+RUN npm install && npm cache clean
 
 # Cleanup
-RUN npm cache clean
-USER root
+# USER root
 # RUN apt-get autoclean
 # RUN apt-get purge -y \
 #     build-essential \
