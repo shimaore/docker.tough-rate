@@ -11,3 +11,4 @@ tests:
 
 push: image tests
 	docker push ${NAME}
+	notify-send -i filesave "Pushed ${NAME}"
