@@ -124,11 +124,14 @@ Configure CouchDB
 
       .then ->
         replicate 'provisioning', (doc) ->
-          doc.filter ?= 'host/replication'
+          doc.filter ?= 'tough-rate-source/replication'
           doc.query_params ?=
             sip_domain_name: options.sip_domain_name
 
       .then ->
+
+FIXME This is corrected in PouchDB > 3.0.6
+
         parsed = url.parse options.prefix_source
         console.log "Auth: #{parsed.auth}"
         source = new PouchDB "#{options.prefix_source}/provisioning", ajax:
