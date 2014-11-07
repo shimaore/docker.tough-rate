@@ -13,6 +13,7 @@
       supervisor = null
 
       replicate = (name,extensions) ->
+        console.log "Going to start replication of #{name}."
         Promise.resolve()
         .then ->
           target = new PouchDB "#{options.prefix_admin}/#{name}"
@@ -30,16 +31,16 @@
         .then (doc) ->
           source = url.parse options.prefix_source
           auth = (new Buffer source.auth).toString 'base64'
-          doc._id ?= "#{name} from master"
-          doc.source ?=
+          doc._id = "Replicate #{name} from master"
+          doc.source =
             url: url.format
               protocol: source.protocol
               host: source.host
               pathname: name
             headers:
               Authorization: "Basic #{auth}"
-          doc.target ?= name
-          doc.continuous ?= true
+          doc.target = name
+          doc.continuous = true
           extensions? doc
           delete doc._replication_state
           delete doc._replication_state_time
@@ -124,8 +125,8 @@ Configure CouchDB
 
       .then ->
         replicate 'provisioning', (doc) ->
-          doc.filter ?= 'tough-rate-source/replication'
-          doc.query_params ?=
+          doc.filter = 'tough-rate-source/replication'
+          doc.query_params =
             sip_domain_name: options.sip_domain_name
 
       .then ->
