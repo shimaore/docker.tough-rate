@@ -46,6 +46,7 @@
           delete doc._replication_state
           delete doc._replication_state_time
           delete doc._replication_id
+          console.log "Updating '#{id}'."
           replicator.put doc
 
         .catch (error) ->
@@ -84,23 +85,26 @@ Configure CouchDB
         replicator = new PouchDB "#{options.prefix_admin}/_replicator"
         true
       .then ->
+        console.log "Checking access to the local provisioning database."
         prov.info()
       .catch (error) ->
         console.error error
         console.log "Unable to create local provisioning database"
         throw error
       .then ->
+        console.log "Querying user 'tough-rate'."
         users.get 'org.couchdb.user:tough-rate'
       .catch (error) ->
         console.error error
         console.error '(ignored)'
         {}
       .then (doc) ->
+        console.log "Updating user 'tough-rate'."
         doc._id ?= "org.couchdb.user:tough-rate"
         doc.name ?= 'tough-rate'
         doc.type ?= 'user'
-        doc.password ?= 'tough-rate-password'
-        doc.roles ?= ['provisioning_reader']
+        doc.password = 'tough-rate-password'
+        doc.roles = ['provisioning_reader']
         users.put doc
 
       .catch (error) ->
@@ -109,6 +113,7 @@ Configure CouchDB
         throw error
 
       .then ->
+        console.log "Updating design document."
         prov.get GatewayManager.couch._id
       .catch (error) ->
         console.error error
@@ -140,6 +145,7 @@ FIXME This is corrected in PouchDB > 3.0.6
           auth:
             user: parsed.auth.split(':')[0]
             pass: parsed.auth.split(':')[1]
+        console.log "Querying for rulesets on master database."
         source.allDocs
           startkey: "ruleset:#{options.sip_domain_name}:"
           endkey: "ruleset:#{options.sip_domain_name};"
