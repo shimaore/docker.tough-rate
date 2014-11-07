@@ -13,6 +13,7 @@
       supervisor = null
 
       replicate = (name,extensions) ->
+        id = "Replicate #{name} from master"
         console.log "Going to start replication of #{name}."
         Promise.resolve()
         .then ->
@@ -23,7 +24,7 @@
           console.log "Unable to create local #{name} database"
           throw error
         .then ->
-          replicator.get "#{name} from master"
+          replicator.get id
         .catch (error) ->
           console.error error
           console.error '(ignored)'
@@ -31,7 +32,7 @@
         .then (doc) ->
           source = url.parse options.prefix_source
           auth = (new Buffer source.auth).toString 'base64'
-          doc._id = "Replicate #{name} from master"
+          doc._id ?= id
           doc.source =
             url: url.format
               protocol: source.protocol
