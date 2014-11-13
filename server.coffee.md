@@ -4,6 +4,7 @@
     {GatewayManager,CallServer,Router} = require 'tough-rate'
     statistics = require 'winston'
     assert = require 'assert'
+    pkg = require './package.json'
 
     run = (options) ->
       provisioning = null
@@ -11,6 +12,7 @@
       assert options.sip_domain_name?, 'Missing `sip_domain_name` option.'
       assert options.prefix_local?, 'Missing `prefix_local` option.'
 
+      statistics.info "Booting server for #{pkg.name} version #{pkg.version}.", options
       Promise.resolve()
       .then ->
         provisioning = new PouchDB options.provisioning

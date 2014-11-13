@@ -4,9 +4,11 @@
     supervisord = Promise.promisifyAll require 'supervisord'
     url = require 'url'
     {GatewayManager} = require 'tough-rate'
+    statistics = require 'winston'
+    pkg = require './package.json'
 
     run = (options) ->
-      console.log "Configuring from #{options} ."
+      statistics.info "Configuring #{pkg.name} version #{pkg.version}.", options
       users = null
       prov = null
       replicator = null
