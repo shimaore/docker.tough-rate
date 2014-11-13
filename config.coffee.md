@@ -137,14 +137,7 @@ Configure CouchDB
 
       .then ->
 
-FIXME This is corrected in PouchDB > 3.0.6
-
-        parsed = url.parse options.prefix_source
-        console.log "Auth: #{parsed.auth}"
-        source = new PouchDB "#{options.prefix_source}/provisioning", ajax:
-          auth:
-            user: parsed.auth.split(':')[0]
-            pass: parsed.auth.split(':')[1]
+        source = new PouchDB "#{options.prefix_source}/provisioning"
         console.log "Querying for rulesets on master database."
         source.allDocs
           startkey: "ruleset:#{options.sip_domain_name}:"
