@@ -4,7 +4,7 @@
 , "sip_domain_name": "sip.local"
 , "profile": "tough-rate-sender"
 , "host": "host.local"
-, "outbound_route": "default_outbound_route"
+, "default_outbound_route": "the_default_outbound_route"
 , "acls": {
     "default": [
       "172.17.42.0/8"
