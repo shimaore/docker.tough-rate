@@ -18,6 +18,12 @@
       .then ->
         provisioning = new PouchDB options.provisioning
         options.provisioning = provisioning
+
+`ruleset_of`
+------------
+
+Retrieve the ruleset (and ruleset database) for the given ruleset name.
+
         options.ruleset_of = (x) ->
           provisioning.get "ruleset:#{options.sip_domain_name}:#{x}"
           .then (doc) ->
@@ -26,7 +32,7 @@
               ruleset: doc
               ruleset_database: new PouchDB "#{options.prefix_local}/#{doc.database}"
 
-We _must_ return an object. The router will detect no data is present and report via SIP.
+We _must_ return an object, even if an error occurred. The router will detect no data is present and report the problem via SIP.
 
           .catch (error) ->
             logger.error "Could not locate information for ruleset #{x} in #{options.sip_domain_name}.", error.toString()
@@ -34,8 +40,17 @@ We _must_ return an object. The router will detect no data is present and report
 
         options.logger = logger
 
+The promise resolution is needed here to allow `new PouchDB` to complete.
+
       .then ->
-        new CallServer options.port, options
+        server = new CallServer options.port, options
+        if options.default?
+          server.gateway_manager.set options.default
+
+Toolbox
+-------
+
+This may work as an app or a module.
 
     if module is require.main
       fs.readFileAsync process.argv[2]
