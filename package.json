@@ -12,7 +12,7 @@
     "coffee-script": "^1.8.0",
     "pouchdb": "^3.1.0",
     "supervisord": "0.0.4",
-    "tough-rate": "4.0.4",
+    "tough-rate": "4.1.0",
     "winston": "^0.8.1"
   },
   "devDependencies": {
