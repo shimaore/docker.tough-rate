@@ -1,2 +1,3 @@
 node_modules
 conf/acl.conf.xml
+conf/freeswitch.xml
