@@ -65,18 +65,9 @@ Generate the configuration for FreeSwitch
 =========================================
 
       .then ->
-        acls = ''
-        for name, value of options.acls
-          acls += """
-            <list name="#{name}" default="deny">
-          """
-          for cidr in value
-            acls += """
-              <node type="allow" cidr="#{cidr}" />
-            """
-          acls += '</list>'
-
-        fs.writeFileAsync 'conf/acl.conf.xml', acls, 'utf-8'
+        (require 'conf/freeswitch') options
+      .then (config) ->
+        fs.writeFileAsync 'conf/freeswitch.xml', config, 'utf-8'
 
 Configure CouchDB
 =================
