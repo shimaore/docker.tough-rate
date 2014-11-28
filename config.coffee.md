@@ -65,9 +65,9 @@ Generate the configuration for FreeSwitch
 =========================================
 
       .then ->
-        (require 'conf/freeswitch') options
+        (require './conf/freeswitch') options
       .then (config) ->
-        fs.writeFileAsync 'conf/freeswitch.xml', config, 'utf-8'
+        fs.writeFileAsync './conf/freeswitch.xml', config, 'utf-8'
 
 Configure CouchDB
 =================
