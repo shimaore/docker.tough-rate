@@ -65,9 +65,14 @@ Generate the configuration for FreeSwitch
 =========================================
 
       .then ->
+        console.log "Building FreeSwitch configuration."
         (require './conf/freeswitch') options
       .then (config) ->
+        console.log "Configuration: #{config}"
         fs.writeFileAsync './conf/freeswitch.xml', config, 'utf-8'
+      .catch (error) ->
+        console.error "Unable to create FreeSwitch Configuration: #{error}"
+        throw error
 
 Configure CouchDB
 =================
