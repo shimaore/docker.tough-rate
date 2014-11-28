@@ -6,7 +6,7 @@ module.exports = renderable (o) ->
   the_profiles = o.profiles ?
     sender:
       sip_port: 5060
-      socket_port: 5071
+      socket_port: 5701
 
   doctype()
   document type:'freeswitch/xml', ->
