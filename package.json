@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "acoustic-line": "^1.2.0",
-    "bluebird": "^2.3.6",
+    "bluebird": "^2.6.4",
     "coffee-script": "^1.8.0",
-    "pouchdb": "^3.1.0",
+    "pouchdb": "^3.2.1",
     "supervisord": "0.0.4",
     "tough-rate": "^4.5.0",
     "winston": "^0.8.1"

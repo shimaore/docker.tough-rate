@@ -120,10 +120,11 @@
             <context name="context-sender">
               <extension>
                 <condition field="destination_number" expression="^.+$">
-                  <action application="socket" data="127.0.0.1:5071 async full"/>
+                  <action application="socket" data="127.0.0.1:5701 async full"/>
                 </condition>
               </extension>
             </context>
           </section>
         </document>
-      '''.replace /\n */g, ''
+
+      '''.replace /\n */g, '\n'
