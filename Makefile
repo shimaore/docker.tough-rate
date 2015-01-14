@@ -13,5 +13,5 @@ tests:
 	# npm test
 
 push: image tests
-	docker push ${NAME}
 	docker push ${NAME}:${TAG}
+	docker push ${NAME}
