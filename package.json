@@ -5,6 +5,7 @@
   "author": "Stéphane Alnet <stephane@shimaore.net> (http://stephane.shimaore.net/)",
   "license": "Unlicense",
   "scripts": {
+    "pretest": "npm install",
     "test": "mocha"
   },
   "dependencies": {

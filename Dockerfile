@@ -3,16 +3,20 @@ FROM shimaore/freeswitch
 MAINTAINER Stéphane Alnet <stephane@shimaore.net>
 
 USER root
-# These will remain inside the archive.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    nodejs-legacy \
-    supervisor
-# Build tools, will get removed at the end.
-RUN apt-get install -y --no-install-recommends \
-    build-essential \
-    git \
-    npm
-RUN apt-get clean
+  build-essential \
+  ca-certificates \
+  curl \
+  git \
+  make \
+  supervisor
+# Install Node.js using `n`.
+RUN git clone https://github.com/tj/n.git
+WORKDIR n
+RUN make install
+WORKDIR ..
+RUN n 0.10.35
+ENV NODE_ENV production
 
 # FreeSwitch configuration
 COPY conf/ /usr/local/freeswitch/conf
@@ -29,13 +33,15 @@ RUN mkdir -p \
 RUN npm install && npm cache clean
 
 # Cleanup
-# USER root
-# RUN apt-get autoclean
-# RUN apt-get purge -y \
-#     build-essential \
-#     git \
-#     npm
-# RUN apt-get autoremove -y
+USER root
+RUN apt-get purge -y \
+  build-essential \
+  ca-certificates \
+  curl \
+  git \
+  make
+RUN apt-get autoremove -y
+RUN apt-get clean
 
 USER freeswitch
 CMD ["supervisord", "-n"]
