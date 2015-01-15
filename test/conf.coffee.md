@@ -2,7 +2,7 @@
 
     it 'The FreeSwitch configuration', ->
       options = require '../local/example.json'
-      config = (require 'conf/freeswitch') options
+      config = (require '../conf/freeswitch') options
 
       expect(config).to.equal '''
         <?xml version="1.0" encoding="utf-8" ?>

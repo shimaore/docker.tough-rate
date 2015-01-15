@@ -7,7 +7,7 @@
     before ->
       # Write a file in server.json that contains  "acls": { "default": [ "172.17.42.0/8" ] }
 
-    it 'should write proper ACLS', ->
+    it.skip 'should write proper ACLS', ->
       run = require '../config.coffee.md'
       options = require '../local/example.json'
       run options
