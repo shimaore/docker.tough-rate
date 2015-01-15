@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Build tools, will get removed at the end.
 RUN apt-get install -y --no-install-recommends \
     build-essential \
+    git \
     npm
 RUN apt-get clean
 
@@ -32,6 +33,7 @@ RUN npm install && npm cache clean
 # RUN apt-get autoclean
 # RUN apt-get purge -y \
 #     build-essential \
+#     git \
 #     npm
 # RUN apt-get autoremove -y
 
