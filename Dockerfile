@@ -42,4 +42,5 @@ CMD ["supervisord", "-n"]
 # 127.0.0.1:5702/tcp -- FreeSwitch event socket
 # *:5701/tcp -- tough-rate event server
 # *:5703/udp, *:5703/tcp -- SIP
+# *:5704/tcp -- tough-rate web server
 EXPOSE 5703/udp 5703/tcp
