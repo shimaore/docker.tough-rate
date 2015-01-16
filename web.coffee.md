@@ -1,3 +1,5 @@
+Web Services
+============
 
     Zappa = require 'zappajs'
     supervisord = require 'supervisord'
@@ -10,6 +12,10 @@
         Promise.promisifyAll supervisord.connect 'http://127.0.0.1:5700'
 
       web = Zappa.run options.web, ->
+
+CallServer statistics
+---------------------
+
         @get '/statistics/:key', ->
           @res.type 'json'
           value = server.statistics.get @params.key
@@ -17,6 +23,9 @@
             @send value.toJSON()
           else
             @res.status(500).json error:'No such key', key:@params.key
+
+Generic statistics
+------------------
 
         @get '/', ->
           @json
@@ -26,13 +35,16 @@
             uptime: process.uptime()
             memory: process.memoryUsage()
 
+Supervisor info
+---------------
+
         @get '/supervisor', ->
           supervisor = sup()
           res = {}
           supervisor.getSupervisorVersionAsync()
           .then (version) ->
             res.version = version
-            supervisor.getStateASync()
+            supervisor.getStateAsync()
           .then (state) ->
             res.state = state
             supervisor.getAllProcessInfoAsync()
@@ -40,3 +52,5 @@
             res.processes = processes
           .then =>
             @json res
+          .catch (error) =>
+            @res.status(500).json error:error.toString()
