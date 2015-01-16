@@ -51,4 +51,4 @@ CMD ["supervisord", "-n"]
 # *:5701/tcp -- tough-rate event server
 # *:5703/udp, *:5703/tcp -- SIP
 # *:5704/tcp -- tough-rate web server
-EXPOSE 5703/udp 5703/tcp
+EXPOSE 5703/udp 5703/tcp 5704/tcp
