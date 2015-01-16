@@ -1,5 +1,4 @@
     PouchDB = require 'pouchdb'
-    Zappa = require 'zappajs'
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
     {CallServer} = require 'tough-rate'
@@ -48,22 +47,7 @@ The promise resolution is needed here to allow `new PouchDB` to complete.
         if options.default?
           server.gateway_manager.set options.default
 
-        web = Zappa.run options.web, ->
-          @get '/statistics/:key', ->
-            @res.type 'json'
-            value = server.statistics.get @params.key
-            if value?
-              @send value.toJSON()
-            else
-              @res.status(500).json error:'No such key', key:@params.key
-
-          @get '/', ->
-            @json
-              ok:true
-              package: pkg.name
-              version: pkg.version
-              uptime: process.uptime()
-              memory: process.memoryUsage()
+        (require './web') options, server
 
 Toolbox
 -------
