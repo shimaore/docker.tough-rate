@@ -4,11 +4,14 @@
     request = require 'superagent-as-promised'
 
     describe 'Basic web service', ->
+      app = null
       before ->
         options =
           web:
             port: 5704
-        (require '../web') options, null # no server
+        app = (require '../web') options, null # no server
+      after ->
+        app.server?.close()
 
       it 'should respond', (done) ->
         request.get 'http://127.0.0.1:5704/'
