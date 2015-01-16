@@ -57,6 +57,14 @@ The promise resolution is needed here to allow `new PouchDB` to complete.
             else
               @res.status(500).json error:'No such key', key:@params.key
 
+          @get '/', ->
+            @json
+              ok:true
+              package: pkg.name
+              version: pkg.version
+              uptime: process.uptime()
+              memory: process.memoryUsage()
+
 Toolbox
 -------
 
