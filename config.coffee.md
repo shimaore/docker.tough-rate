@@ -3,7 +3,7 @@
     fs = Promise.promisifyAll require 'fs'
     supervisord = Promise.promisifyAll require 'supervisord'
     url = require 'url'
-    {GatewayManager} = require 'tough-rate'
+    {GatewayManager,couch} = require 'tough-rate'
     statistics = require 'winston'
     pkg = require './package.json'
 
@@ -111,13 +111,13 @@ Configure CouchDB
 
       .then ->
         console.log "Updating design document."
-        prov.get GatewayManager.couch._id
+        prov.get couch._id
       .catch (error) ->
         console.error error
         console.log '(ignored)'
         {}
       .then ({_rev}) ->
-        doc = GatewayManager.couch
+        doc = couch
         doc._rev = _rev
         prov.put doc
 
