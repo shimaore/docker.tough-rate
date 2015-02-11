@@ -114,8 +114,24 @@ Configure CouchDB
         throw error
 
       .then ->
+        console.log "Updating GatewayManager design document to version #{couch.version}."
+        prov.get GatewayManager.couch._id
+      .catch (error) ->
+        console.error error
+        console.log '(ignored)'
+        {}
+      .then ({_rev}) ->
+        doc = GatewayManager.couch
+        doc._rev = _rev if _rev?
+        prov.put doc
+      .catch (error) ->
+        console.error error
+        console.log "Inserting GatewayManager couchapp failed."
+        throw error
+
+      .then ->
         if prov_master?
-          console.log "Updating design document to version #{couch.version}."
+          console.log "Updating Master design document to version #{couch.version}."
           prov_master.get couch._id
         else
           {}
@@ -128,10 +144,9 @@ Configure CouchDB
           doc = couch
           doc._rev = _rev if _rev?
           prov_master?.put doc
-
       .catch (error) ->
         console.error error
-        console.log "Inserting GatewayManager couchapp failed."
+        console.log "Inserting Master couchapp failed."
         throw error
 
       .then ->
