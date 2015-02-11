@@ -1,11 +1,13 @@
     PouchDB = require 'pouchdb'
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
+    assert = require 'assert'
     supervisord = Promise.promisifyAll require 'supervisord'
     url = require 'url'
     {GatewayManager,couch} = require 'tough-rate'
     statistics = require 'winston'
     pkg = require './package.json'
+    assert couch?, 'Missing design document'
 
     run = (options) ->
       statistics.info "Configuring #{pkg.name} version #{pkg.version}.", options
@@ -110,7 +112,7 @@ Configure CouchDB
         throw error
 
       .then ->
-        console.log "Updating design document."
+        console.log "Updating design document to version #{couch.version}."
         prov.get couch._id
       .catch (error) ->
         console.error error
@@ -118,7 +120,7 @@ Configure CouchDB
         {}
       .then ({_rev}) ->
         doc = couch
-        doc._rev = _rev
+        doc._rev = _rev if _rev?
         prov.put doc
 
       .catch (error) ->
