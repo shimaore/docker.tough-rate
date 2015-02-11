@@ -82,7 +82,7 @@ Configure CouchDB
       .then ->
         users = new PouchDB "#{options.prefix_admin}/_users"
         prov = new PouchDB "#{options.prefix_admin}/provisioning"
-        prov_master = new PouchDB options.prov_master_admin
+        prov_master = new PouchDB options.prov_master_admin if options.prov_master_admin?
         replicator = new PouchDB "#{options.prefix_admin}/_replicator"
         true
       .then ->
@@ -114,16 +114,20 @@ Configure CouchDB
         throw error
 
       .then ->
-        console.log "Updating design document to version #{couch.version}."
-        prov_master.get couch._id
+        if prov_master?
+          console.log "Updating design document to version #{couch.version}."
+          prov_master.get couch._id
+        else
+          {}
       .catch (error) ->
         console.error error
         console.log '(ignored)'
         {}
       .then ({_rev}) ->
-        doc = couch
-        doc._rev = _rev if _rev?
-        prov_master.put doc
+        if prov_master?
+          doc = couch
+          doc._rev = _rev if _rev?
+          prov_master?.put doc
 
       .catch (error) ->
         console.error error
