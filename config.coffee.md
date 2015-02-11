@@ -13,6 +13,7 @@
       statistics.info "Configuring #{pkg.name} version #{pkg.version}.", options
       users = null
       prov = null
+      prov_master = null
       replicator = null
       supervisor = null
 
@@ -81,6 +82,7 @@ Configure CouchDB
       .then ->
         users = new PouchDB "#{options.prefix_admin}/_users"
         prov = new PouchDB "#{options.prefix_admin}/provisioning"
+        prov_master = new PouchDB options.prov_master_admin
         replicator = new PouchDB "#{options.prefix_admin}/_replicator"
         true
       .then ->
@@ -113,7 +115,7 @@ Configure CouchDB
 
       .then ->
         console.log "Updating design document to version #{couch.version}."
-        prov.get couch._id
+        prov_master.get couch._id
       .catch (error) ->
         console.error error
         console.log '(ignored)'
@@ -121,7 +123,7 @@ Configure CouchDB
       .then ({_rev}) ->
         doc = couch
         doc._rev = _rev if _rev?
-        prov.put doc
+        prov_master.put doc
 
       .catch (error) ->
         console.error error
