@@ -11,7 +11,7 @@
   "dependencies": {
     "acoustic-line": "^1.2.0",
     "bluebird": "^2.8.0",
-    "coffee-script": "^1.8.0",
+    "coffee-script": "^1.9.1",
     "pouchdb": "^3.2.1",
     "supervisord": "0.0.4",
     "tough-rate": "^5.7.1",
