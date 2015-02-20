@@ -1,6 +1,6 @@
 {
   "name": "docker.tough-rate",
-  "version": "5.8.0",
+  "version": "5.8.1",
   "description": "A Docker.io image to run FreeSwitch with a tough-rate LCR engine.",
   "author": "Stéphane Alnet <stephane@shimaore.net> (http://stephane.shimaore.net/)",
   "license": "Unlicense",
