@@ -20,7 +20,7 @@ module.exports = renderable (o) ->
           param name:'max-sessions', value:2000
           param name:'sessions-per-second', value:2000
           param name:'min-idle-cpu', value:1
-          param name:'loglevel', value:'debug'
+          param name:'loglevel', value:'error'
       configuration name:'modules.conf', ->
         modules ->
           modules_to_load = [
