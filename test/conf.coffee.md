@@ -22,6 +22,7 @@
             </configuration>
             <configuration name="modules.conf">
               <modules>
+                <load module="mod_logfile"/>
                 <load module="mod_event_socket"/>
                 <load module="mod_commands"/>
                 <load module="mod_dptools"/>
@@ -29,6 +30,23 @@
                 <load module="mod_dialplan_xml"/>
                 <load module="mod_sofia"/>
               </modules>
+            </configuration>
+            <configuration name="logfile.conf">
+              <settings>
+                <param name="rotate-on-hup" value="true"/>
+              </settings>
+              <profiles>
+                <profile name="default">
+                  <settings>
+                    <param name="logfile" value="log/freeswitch.log"/>
+                    <param name="rollover" value="10000000"/>
+                    <param name="uuid" value="true"/>
+                  </settings>
+                  <mappings>
+                    <map name="important" value="err,crit,alert"/>
+                  </mappings>
+                </profile>
+              </profiles>
             </configuration>
             <configuration name="event_socket.conf">
               <settings>

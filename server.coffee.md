@@ -2,9 +2,18 @@
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
     {CallServer} = require 'tough-rate'
-    logger = require 'winston'
+    winston = require 'winston'
     assert = require 'assert'
     pkg = require './package.json'
+
+    logger = new winston.Logger
+      transports: [
+        new winston.transports.File
+          level: 'info'
+          filename: "log/#{pkg.name}-server.log"
+          maxsize: 1000*1000
+          maxFiles: 50
+      ]
 
     run = (options) ->
       provisioning = null

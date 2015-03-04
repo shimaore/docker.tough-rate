@@ -1,7 +1,7 @@
 {renderable} = require 'acoustic-line'
 
 module.exports = renderable (o) ->
-  {doctype,document,section,configuration,settings,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,context,extension,condition,action} = require 'acoustic-line'
+  {doctype,document,section,configuration,settings,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action} = require 'acoustic-line'
   name = o.name ? 'server'
   the_profiles = o.profiles ?
     sender:
@@ -24,6 +24,7 @@ module.exports = renderable (o) ->
       configuration name:'modules.conf', ->
         modules ->
           modules_to_load = [
+            'mod_logfile'
             'mod_event_socket'
             'mod_commands'
             'mod_dptools'
@@ -33,6 +34,17 @@ module.exports = renderable (o) ->
           ]
           for module in modules_to_load
             load {module}
+      configuration name:'logfile.conf', ->
+        settings ->
+          param name:'rotate-on-hup', value:true
+        profiles ->
+          profile name:'default', ->
+            settings ->
+              param name:'logfile', value:"log/freeswitch.log"
+              param name:'rollover', value:10*1000*1000
+              param name:'uuid', value:true
+            mappings ->
+              map name:'important', value:'err,crit,alert'
       configuration name:'event_socket.conf', ->
         settings ->
           param name:'nat-map', value:false
