@@ -6,8 +6,8 @@ module.exports = renderable (o) ->
     settings ->
       param name:'user-agent-string', value:"tough-rate-#{o.name}-#{o.sip_port}"
       param name:'username', value:"tough-rate-#{o.name}"
-      param name:'debug', value:'2'
-      param name:'sip-trace', value:'true'
+      param name:'debug', value:2
+      param name:'sip-trace', value:false
 
       param name:'sip-port', value:o.sip_port
       param name:'bind-params', value:'transport=udp,tcp'

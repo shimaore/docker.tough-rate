@@ -75,7 +75,7 @@
                     <param name="user-agent-string" value="tough-rate-sender-5060"/>
                     <param name="username" value="tough-rate-sender"/>
                     <param name="debug" value="2"/>
-                    <param name="sip-trace" value="true"/>
+                    <param name="sip-trace" value="false"/>
                     <param name="sip-port" value="5060"/>
                     <param name="bind-params" value="transport=udp,tcp"/>
                     <param name="sip-ip" value="0.0.0.0"/>
