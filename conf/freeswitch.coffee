@@ -80,4 +80,6 @@ module.exports = renderable (o) ->
         context name:"context-#{name}", ->
           extension name="socket", ->
             condition field:'destination_number', expression:'^.+$', ->
+              action application:'set', data:'socket_resume=true'
               action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
+              action application:'respond', data:'500 socket failure'
