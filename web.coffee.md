@@ -17,12 +17,18 @@ CallServer statistics
 ---------------------
 
         @get '/statistics/:key', ->
+          precision = @query.precision ? 7
           @res.type 'json'
           value = server.statistics.get @params.key
           if value?
             @send value.toJSON()
           else
             @res.status(500).json error:'No such key', key:@params.key
+
+        @get '/statistics', ->
+          precision = @query.precision ? 7
+          @res.type 'json'
+          @send server.statistics.toJSON precision
 
 Generic statistics
 ------------------
