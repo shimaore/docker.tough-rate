@@ -138,9 +138,7 @@
             <context name="context-sender">
               <extension>
                 <condition field="destination_number" expression="^.+$">
-                  <action application="set" data="socket_resume=true"/>
                   <action application="socket" data="127.0.0.1:5701 async full"/>
-                  <action application="respond" data="500 socket failure"/>
                 </condition>
               </extension>
             </context>
