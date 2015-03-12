@@ -78,9 +78,11 @@ Generate the configuration for FreeSwitch
 
       .then ->
         console.log "Building FreeSwitch configuration."
-        (require './conf/freeswitch') options
+        unless options.server_only is true
+          (require './conf/freeswitch') options
       .then (config) ->
-        fs.writeFileAsync './conf/freeswitch.xml', config, 'utf-8'
+        unless options.server_only is true
+          fs.writeFileAsync './conf/freeswitch.xml', config, 'utf-8'
       .catch (error) ->
         console.error "Unable to create FreeSwitch Configuration: #{error}"
         throw error
@@ -194,9 +196,11 @@ Configure CouchDB
         console.log "Started tough-rate"
 
       .then ->
-        supervisor.startProcessAsync 'freeswitch'
+        unless options.server_only is true
+          supervisor.startProcessAsync 'freeswitch'
       .then ->
-        console.log "Started FreeSwitch"
+        unless options.server_only is true
+          console.log "Started FreeSwitch"
 
 
     if module is require.main
