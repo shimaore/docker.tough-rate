@@ -63,6 +63,7 @@ The promise resolution is needed here to allow `new PouchDB` to complete.
           server.gateway_manager.set options.default
 
         (require './web') options, server
+        (require './notify') options, server
       .catch (error) ->
         logger.error "Terminating #{pkg.name} server: #{error}"
         throw error
