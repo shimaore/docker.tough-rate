@@ -7,7 +7,8 @@ Map `statistics` (that is, CaringBand-as-EventEmitter) messages to Socket.io mes
       server.statistics.on 'add', (data) ->
         socket.emit 'statistics:add',
           host: options.host
-          data: data.toJSON()
+          key: data.key
+          value: data.value.toJSON()
       server.statistics.on 'call', (data) ->
         socket.emit 'call',
           host: options.host
