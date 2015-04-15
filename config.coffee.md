@@ -10,7 +10,7 @@
     assert couch?, 'Missing design document'
 
     run = (options) ->
-      logger.info "Configuring #{pkg.name} version #{pkg.version}.", options
+      debug "Configuring #{pkg.name} version #{pkg.version}.", options
       users = null
       prov = null
       prov_master = null
