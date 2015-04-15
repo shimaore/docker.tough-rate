@@ -5,18 +5,9 @@
     supervisord = Promise.promisifyAll require 'supervisord'
     url = require 'url'
     {GatewayManager,couch} = require 'tough-rate'
-    winston = require 'winston'
     pkg = require './package.json'
+    debug = (require 'debug') "#{pkg.name}:config"
     assert couch?, 'Missing design document'
-
-    logger = new winston.Logger
-      transports: [
-        new winston.transports.File
-          level: 'info'
-          filename: "log/#{pkg.name}-config.log"
-          maxsize: 1000*1000
-          maxFiles: 50
-      ]
 
     run = (options) ->
       logger.info "Configuring #{pkg.name} version #{pkg.version}.", options
