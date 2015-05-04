@@ -2,37 +2,36 @@
     Promise = require 'bluebird'
     fs = Promise.promisifyAll require 'fs'
     assert = require 'assert'
-    supervisord = Promise.promisifyAll require 'supervisord'
     url = require 'url'
-    {GatewayManager,couch} = require 'tough-rate'
-    pkg = require './package.json'
+    GatewayManager = require 'tough-rate/gateway_manager'
+    {couch} = require 'tough-rate'
+    pkg = require '../package.json'
     debug = (require 'debug') "#{pkg.name}:config"
     assert couch?, 'Missing design document'
 
-    run = (options) ->
+    @config = (options) ->
       debug "Configuring #{pkg.name} version #{pkg.version}.", options
       users = null
       prov = null
       prov_master = null
       replicator = null
-      supervisor = null
 
       replicate = (name,extensions) ->
         id = "Replicate #{name} from master"
-        console.log "Going to start replication of #{name}."
+        debug "Going to start replication of #{name}."
         Promise.resolve()
         .then ->
           target = new PouchDB "#{options.prefix_admin}/#{name}"
           target.info()
         .catch (error) ->
-          console.error error
-          console.log "Unable to create local #{name} database"
+          debug error
+          debug "Unable to create local #{name} database"
           throw error
         .then ->
           replicator.get id
         .catch (error) ->
-          console.error error
-          console.error '(ignored)'
+          debug error
+          debug '(ignored)'
           {}
         .then (doc) ->
           source = url.parse options.prefix_source
@@ -51,32 +50,18 @@
           delete doc._replication_state
           delete doc._replication_state_time
           delete doc._replication_id
-          console.log "Updating '#{id}'."
+          debug "Updating '#{id}'."
           replicator.put doc
 
         .catch (error) ->
-          console.error error
+          debug error
           if error.status? and error.status is 403
-            console.log "Replication already started"
+            debug "Replication already started"
             return
-          console.log "Replication from #{options.prefix_source}/#{name} failed."
+          debug "Replication from #{options.prefix_source}/#{name} failed."
           throw error
 
       Promise.resolve()
-
-Generate the configuration for FreeSwitch
-=========================================
-
-      .then ->
-        console.log "Building FreeSwitch configuration."
-        unless options.server_only is true
-          (require './conf/freeswitch') options
-      .then (config) ->
-        unless options.server_only is true
-          fs.writeFileAsync './conf/freeswitch.xml', config, 'utf-8'
-      .catch (error) ->
-        console.error "Unable to create FreeSwitch Configuration: #{error}"
-        throw error
 
 Configure CouchDB
 =================
@@ -88,21 +73,21 @@ Configure CouchDB
         replicator = new PouchDB "#{options.prefix_admin}/_replicator"
         true
       .then ->
-        console.log "Checking access to the local provisioning database."
+        debug "Checking access to the local provisioning database."
         prov.info()
       .catch (error) ->
-        console.error error
-        console.log "Unable to create local provisioning database"
+        debug error
+        debug "Unable to create local provisioning database"
         throw error
       .then ->
-        console.log "Querying user 'tough-rate'."
+        debug "Querying user 'tough-rate'."
         users.get 'org.couchdb.user:tough-rate'
       .catch (error) ->
-        console.error error
-        console.error '(ignored)'
+        debug error
+        debug '(ignored)'
         {}
       .then (doc) ->
-        console.log "Updating user 'tough-rate'."
+        debug "Updating user 'tough-rate'."
         doc._id ?= "org.couchdb.user:tough-rate"
         doc.name ?= 'tough-rate'
         doc.type ?= 'user'
@@ -111,35 +96,35 @@ Configure CouchDB
         users.put doc
 
       .catch (error) ->
-        console.error error
-        console.log "User creation failed."
+        debug error
+        debug "User creation failed."
         throw error
 
       .then ->
-        console.log "Updating GatewayManager design document to version #{couch.version}."
+        debug "Updating GatewayManager design document to version #{couch.version}."
         prov.get GatewayManager.couch._id
       .catch (error) ->
-        console.error error
-        console.log '(ignored)'
+        debug error
+        debug '(ignored)'
         {}
       .then ({_rev}) ->
         doc = GatewayManager.couch
         doc._rev = _rev if _rev?
         prov.put doc
       .catch (error) ->
-        console.error error
-        console.log "Inserting GatewayManager couchapp failed."
+        debug error
+        debug "Inserting GatewayManager couchapp failed."
         throw error
 
       .then ->
         if prov_master?
-          console.log "Updating Master design document to version #{couch.version}."
+          debug "Updating Master design document to version #{couch.version}."
           prov_master.get couch._id
         else
           {}
       .catch (error) ->
-        console.error error
-        console.log '(ignored)'
+        debug error
+        debug '(ignored)'
         {}
       .then ({_rev}) ->
         if prov_master?
@@ -147,8 +132,8 @@ Configure CouchDB
           doc._rev = _rev if _rev?
           prov_master?.put doc
       .catch (error) ->
-        console.error error
-        console.log "Inserting Master couchapp failed."
+        debug error
+        debug "Inserting Master couchapp failed."
         throw error
 
       .then ->
@@ -160,49 +145,22 @@ Configure CouchDB
       .then ->
 
         source = new PouchDB "#{options.prefix_source}/provisioning"
-        console.log "Querying for rulesets on master database."
+        debug "Querying for rulesets on master database."
         source.allDocs
           startkey: "ruleset:#{options.sip_domain_name}:"
           endkey: "ruleset:#{options.sip_domain_name};"
           include_docs: true
 
       .then ({rows}) ->
-        console.log JSON.stringify rows
+        debug JSON.stringify rows
         it = Promise.resolve()
         for row in rows when row.doc?.database?
           do (row) ->
             it = it.then ->
-              console.log "Going to replicate #{row.doc.database}"
+              debug "Going to replicate #{row.doc.database}"
               replicate row.doc.database
 
         it
 
       .then ->
-        console.log "Configured."
-
-      .then ->
-        supervisor = Promise.promisifyAll supervisord.connect 'http://127.0.0.1:5700'
-        supervisor.startProcessAsync 'tough-rate'
-      .then ->
-        console.log "Started tough-rate"
-
-      .then ->
-        unless options.server_only is true
-          supervisor.startProcessAsync 'freeswitch'
-      .then ->
-        unless options.server_only is true
-          console.log "Started FreeSwitch"
-
-
-    if module is require.main
-      fs.readFileAsync process.argv[2]
-      .then (content) ->
-        JSON.parse content
-      .then (options) ->
-        run options
-      .catch (error) ->
-        console.error error
-        console.log "Configuration failed."
-        process.exit 1
-    else
-      module.exports = run
+        debug "Configured."
