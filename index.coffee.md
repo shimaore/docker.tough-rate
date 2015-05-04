@@ -40,3 +40,4 @@ Default FreeSwitch configuration
     ducks = require 'thinkable-ducks'
     debug 'Starting'
     ducks cfg
+    debug 'Ready'
