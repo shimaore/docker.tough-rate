@@ -3,7 +3,7 @@
     fs = Promise.promisifyAll require 'fs'
     {CallServer} = require 'tough-rate'
     assert = require 'assert'
-    pkg = require './package.json'
+    pkg = require '../package.json'
     debug = (require 'debug') "#{pkg.name}:server"
 
     @server_pre = ->
