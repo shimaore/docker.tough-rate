@@ -43,7 +43,3 @@ We _must_ return an object, even if an error occurred. The router will detect no
         options.ruleset_of = ->
           debug "#{pkg.name} #{pkg.version}: `ruleset_of` was called but no `prefix_local` was present in the configuration."
           {}
-
-    @server_post = ->
-      if @cfg.default?
-        @cfg.gateway_manager.set @cfg.default
