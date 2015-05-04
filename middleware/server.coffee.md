@@ -44,8 +44,6 @@ We _must_ return an object, even if an error occurred. The router will detect no
           debug "#{pkg.name} #{pkg.version}: `ruleset_of` was called but no `prefix_local` was present in the configuration."
           {}
 
-The promise resolution is needed here to allow `new PouchDB` to complete.
-
     @server_post = ->
-        if @cfg.default?
-          @server.gateway_manager.set @cfg.default
+      if @cfg.default?
+        @server.gateway_manager.set @cfg.default

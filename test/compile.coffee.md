@@ -9,5 +9,6 @@
       it 'should run', ->
         process.env.CONFIG = './local/example.json'
         process.env.MODE = 'config'
+        process.env.SUPERVISOR = ''
         require '../index'
         null

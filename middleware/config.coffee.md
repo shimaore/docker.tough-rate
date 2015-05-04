@@ -12,6 +12,9 @@
     @name = "#{pkg.name}/middleware/config"
     @config = (options) ->
       debug "Configuring #{pkg.name} version #{pkg.version}.", options
+      assert options.prefix_admin?, 'Missing prefix_admin'
+      assert options.prefix_source?, 'Missing prefix_source'
+      assert options.sip_domain_name?, 'Missing sip_domain_name'
       users = null
       prov = null
       prov_master = null
@@ -62,11 +65,10 @@
           debug "Replication from #{options.prefix_source}/#{name} failed."
           throw error
 
-      Promise.resolve()
-
 Configure CouchDB
 =================
 
+      Promise.resolve()
       .then ->
         users = new PouchDB "#{options.prefix_admin}/_users"
         prov = new PouchDB "#{options.prefix_admin}/provisioning"
