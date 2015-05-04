@@ -9,6 +9,7 @@
     debug = (require 'debug') "#{pkg.name}:config"
     assert couch?, 'Missing design document'
 
+    @name "#{pkg.name}/middleware/config"
     @config = (options) ->
       debug "Configuring #{pkg.name} version #{pkg.version}.", options
       users = null

@@ -6,6 +6,7 @@
     pkg = require '../package.json'
     debug = (require 'debug') "#{pkg.name}:server"
 
+    @name = "#{pkg.name}/middleware/server"
     @server_pre = ->
       options = @cfg
       provisioning = null
