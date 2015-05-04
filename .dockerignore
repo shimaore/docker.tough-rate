@@ -1,2 +1,6 @@
 .git
+local
 node_modules
+*.js
+*.js.map
+Makefile
