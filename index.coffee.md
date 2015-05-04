@@ -1,30 +1,42 @@
 Standard `tough-rate`
 ---------------------
 
+    pkg = require './package.json'
+    debug = (require 'debug') "#{pkg.name}:index"
+
+    debug "Loading #{process.env.CONFIG}"
     cfg = require process.env.CONFIG
 
 Default `use` list for tough-rate.
 
+    debug 'cfg.use'
     cfg.use = [
-      require './middleware/config'
-      require './middleware/server'
-      require 'tough-rate/middleware/setup'
-      require 'tough-rate/middleware/numeric'
-      require 'tough-rate/middleware/response-handlers'
-      require 'tough-rate/middleware/local-number'
-      require 'tough-rate/middleware/ruleset'
-      require 'tough-rate/middleware/emergency'
-      require 'tough-rate/middleware/routes-gwid'
-      require 'tough-rate/middleware/routes-carrierid'
-      require 'tough-rate/middleware/routes-registrant'
-      require 'tough-rate/middleware/flatten'
-      require 'tough-rate/middleware/cdr'
-      require 'tough-rate/middleware/call-handler'
+      './middleware/config'
+      './middleware/server'
+      'tough-rate/middleware/setup'
+      'tough-rate/middleware/numeric'
+      'tough-rate/middleware/response-handlers'
+      'tough-rate/middleware/local-number'
+      'tough-rate/middleware/ruleset'
+      'tough-rate/middleware/emergency'
+      'tough-rate/middleware/routes-gwid'
+      'tough-rate/middleware/routes-carrierid'
+      'tough-rate/middleware/routes-registrant'
+      'tough-rate/middleware/flatten'
+      'tough-rate/middleware/cdr'
+      'tough-rate/middleware/call-handler'
     ]
+
+    cfg.use = cfg.use.map (m) ->
+      debug "Requiring #{m}"
+      require m
 
 Default FreeSwitch configuration
 
+    debug 'Loading conf/freeswitch'
     cfg.freeswitch = require './conf/freeswitch'
 
+    debug 'Loading thinkable-ducks'
     ducks = require 'thinkable-ducks'
+    debug 'Starting'
     ducks cfg
