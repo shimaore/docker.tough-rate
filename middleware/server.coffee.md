@@ -46,4 +46,4 @@ We _must_ return an object, even if an error occurred. The router will detect no
 
     @server_post = ->
       if @cfg.default?
-        @cfg.server.gateway_manager.set @cfg.default
+        @cfg.gateway_manager.set @cfg.default
