@@ -10,7 +10,8 @@
     assert couch?, 'Missing design document'
 
     @name = "#{pkg.name}/middleware/config"
-    @config = (options) ->
+    @config = ->
+      options = @cfg
       debug "Configuring #{pkg.name} version #{pkg.version}.", options
       assert options.prefix_admin?, 'Missing prefix_admin'
       assert options.prefix_source?, 'Missing prefix_source'
