@@ -7,6 +7,12 @@
     debug = (require 'debug') "#{pkg.name}:server"
 
     @name = "#{pkg.name}/middleware/server"
+
+    tr_package = require 'tough-rate/package.json'
+    @web = ->
+      @cfg.versions[pkg.name] = pkg.version
+      @cfg.versions[tr_pkg.name] = tr_pkg.version
+
     @server_pre = ->
       options = @cfg
       provisioning = null
