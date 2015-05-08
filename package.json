@@ -25,5 +25,26 @@
     "mocha": "^2.2.4",
     "superagent-as-promised": "^3.1.1",
     "supervisord": "0.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shimaore/docker.tough-rate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shimaore/docker.tough-rate/issues"
+  },
+  "homepage": "https://github.com/shimaore/docker.tough-rate",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "FreeSwitch",
+    "LCR",
+    "tough-rate",
+    "middleware",
+    "Docker.io",
+    "Docker",
+    "CCNQ"
+  ]
 }
