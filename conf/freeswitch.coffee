@@ -78,6 +78,6 @@ module.exports = renderable (o) ->
 
       for name, profile of the_profiles
         context name:"context-#{name}", ->
-          extension name="socket", ->
+          extension name:"socket", ->
             condition field:'destination_number', expression:'^.+$', ->
               action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
