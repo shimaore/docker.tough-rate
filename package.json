@@ -19,11 +19,9 @@
     "tough-rate": "^10.0.3"
   },
   "devDependencies": {
-    "caring-band": "^1.4.0",
     "chai": "^2.2.0",
     "chai-as-promised": "^4.3.0",
     "mocha": "^2.2.4",
-    "superagent-as-promised": "^3.1.1",
     "supervisord": "0.0.4"
   },
   "repository": {
