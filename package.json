@@ -15,8 +15,8 @@
     "coffee-script": "^1.9.2",
     "debug": "^2.2.0",
     "pouchdb": "^3.5.0",
-    "thinkable-ducks": "^4.1.0",
-    "tough-rate": "^10.0.3"
+    "thinkable-ducks": "^4.2.0",
+    "tough-rate": "^10.1.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
