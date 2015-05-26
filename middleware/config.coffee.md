@@ -65,6 +65,7 @@ Push the `tough-rate` design document to the master provisioning database
 
       .then ->
         cfg.replicate 'provisioning', (doc) ->
+          debug "Using replication filter #{couch.replication_filter}"
           doc.filter = couch.replication_filter
           doc.query_params =
             sip_domain_name: cfg.sip_domain_name
