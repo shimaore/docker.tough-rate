@@ -14,10 +14,10 @@
     "bluebird": "^2.9.25",
     "coffee-script": "^1.9.2",
     "debug": "^2.2.0",
-    "nimble-direction": "^1.0.5",
+    "nimble-direction": "^2.0.0",
     "pouchdb": "^3.5.0",
     "thinkable-ducks": "^4.2.1",
-    "tough-rate": "^10.4.5"
+    "tough-rate": "^10.5.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
