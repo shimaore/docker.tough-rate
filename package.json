@@ -17,10 +17,10 @@
     "nimble-direction": "^2.0.1",
     "pouchdb": "^3.5.0",
     "thinkable-ducks": "^4.3.0",
-    "tough-rate": "^10.5.2"
+    "tough-rate": "^10.5.4"
   },
   "devDependencies": {
-    "chai": "^2.2.0",
+    "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
     "mocha": "^2.2.4",
     "supervisord": "0.0.4"
