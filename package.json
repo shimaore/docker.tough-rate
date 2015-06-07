@@ -17,7 +17,7 @@
     "nimble-direction": "^2.0.1",
     "pouchdb": "^3.5.0",
     "thinkable-ducks": "^4.3.0",
-    "tough-rate": "^10.5.4"
+    "tough-rate": "^10.6.1"
   },
   "devDependencies": {
     "chai": "^2.3.0",
