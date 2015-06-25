@@ -66,7 +66,7 @@ module.exports = renderable (cfg) ->
           param name:'log-level', value:1
           param name:'debug-presence', value:0
         profiles ->
-          profile_module = cfg.profile_module ? './profile'
+          profile_module = cfg.profile_module ? require './profile'
           for name, profile of the_profiles
             profile.timer_t1 ?= 250
             profile.timer_t4 ?= 4000
@@ -75,7 +75,7 @@ module.exports = renderable (cfg) ->
             profile.local_ip = 'auto'
             profile.name = name
             profile.context ?= "context-#{name}"
-            (require profile_module) profile
+            profile_module profile
 
     section name:'dialplan', ->
 
@@ -90,4 +90,4 @@ module.exports = renderable (cfg) ->
       section 'phrases', ->
         macros ->
           for module in cfg.phrases
-            (require module).include sound_dir
+            module.include sound_dir
