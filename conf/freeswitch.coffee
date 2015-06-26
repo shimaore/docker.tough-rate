@@ -90,4 +90,4 @@ module.exports = renderable (cfg) ->
       section 'phrases', ->
         macros ->
           for module in cfg.phrases
-            module.include sound_dir
+            (module.include sound_dir) cfg

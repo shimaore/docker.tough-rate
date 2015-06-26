@@ -20,6 +20,7 @@
     "tough-rate": "^10.6.1"
   },
   "devDependencies": {
+    "bumpy-lawyer": "^1.0.1",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
     "mocha": "^2.2.4",

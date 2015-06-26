@@ -1,5 +1,16 @@
     {expect} = require 'chai'
 
+    it 'The FreeSwitch configuration should accept phrases', ->
+      options = require '../local/example.json'
+      opts = {}
+      for own k,v of options
+        opts[k] = v
+      opts.phrases = [
+        require 'bumpy-lawyer/fr'
+      ]
+      config = (require '../conf/freeswitch') opts
+      expect(config.match /<action function="play" data="voicemail\/vm-record_greeting.wav"\/>/)
+
     it 'The FreeSwitch configuration', ->
       options = require '../local/example.json'
       config = (require '../conf/freeswitch') options
