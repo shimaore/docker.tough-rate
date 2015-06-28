@@ -77,6 +77,11 @@ module.exports = renderable (cfg) ->
             profile.context ?= "context-#{name}"
             profile_module profile
 
+      configuration name:'httapi.conf', ->
+        settings ->
+        profiles ->
+          profile name:'default', ->
+
     section name:'dialplan', ->
 
       for name, profile of the_profiles
