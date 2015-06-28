@@ -67,15 +67,15 @@ module.exports = renderable (cfg) ->
           param name:'debug-presence', value:0
         profiles ->
           profile_module = cfg.profile_module ? require './profile'
-          for name, profile of the_profiles
-            profile.timer_t1 ?= 250
-            profile.timer_t4 ?= 4000
-            profile.timer_t2 ?= 2000
-            profile.timer_t1x64 ?= profile.timer_t2
-            profile.local_ip = 'auto'
-            profile.name = name
-            profile.context ?= "context-#{name}"
-            profile_module profile
+          for name, p of the_profiles
+            p.timer_t1 ?= 250
+            p.timer_t4 ?= 4000
+            p.timer_t2 ?= 2000
+            p.timer_t1x64 ?= p.timer_t2
+            p.local_ip = 'auto'
+            p.name = name
+            p.context ?= "context-#{name}"
+            profile_module p
 
       configuration name:'httapi.conf', ->
         settings ->

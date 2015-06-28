@@ -144,6 +144,14 @@
                 </profile>
               </profiles>
             </configuration>
+            <configuration name="httapi.conf">
+              <settings>
+              </settings>
+              <profiles>
+                <profile name="default">
+                </profile>
+              </profiles>
+            </configuration>
           </section>
           <section name="dialplan">
             <context name="context-sender">
