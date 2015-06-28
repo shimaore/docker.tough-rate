@@ -148,6 +148,11 @@
               <settings>
               </settings>
               <profiles>
+                <profile name="default">
+                  <params>
+                    <param name="gateway-url" value=""/>
+                  </params>
+                </profile>
               </profiles>
             </configuration>
           </section>

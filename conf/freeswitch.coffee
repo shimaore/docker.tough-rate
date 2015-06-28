@@ -1,7 +1,7 @@
 {renderable} = require 'acoustic-line'
 
 module.exports = renderable (cfg) ->
-  {doctype,document,section,configuration,settings,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action,macros} = require 'acoustic-line'
+  {doctype,document,section,configuration,settings,params,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action,macros} = require 'acoustic-line'
   name = cfg.name ? 'server'
   the_profiles = cfg.profiles ?
     sender:
@@ -80,6 +80,9 @@ module.exports = renderable (cfg) ->
       configuration name:'httapi.conf', ->
         settings ->
         profiles ->
+          profile name:'default', ->
+            params ->
+              param 'gateway-url', ''
 
     section name:'dialplan', ->
 
