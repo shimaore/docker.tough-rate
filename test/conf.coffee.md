@@ -148,8 +148,6 @@
               <settings>
               </settings>
               <profiles>
-                <profile name="default">
-                </profile>
               </profiles>
             </configuration>
           </section>

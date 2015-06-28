@@ -80,7 +80,6 @@ module.exports = renderable (cfg) ->
       configuration name:'httapi.conf', ->
         settings ->
         profiles ->
-          profile name:'default', ->
 
     section name:'dialplan', ->
 
