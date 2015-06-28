@@ -80,9 +80,15 @@ module.exports = renderable (cfg) ->
       configuration name:'httapi.conf', ->
         settings ->
         profiles ->
+          # In mod_httapi.c/fetch_cache_data(), the profile_name might be set as a parameter, a setting, or defaults to `default`.
           profile name:'default', ->
             params ->
-              param 'gateway-url', ''
+              param 'gateway-url', cfg.httapi_url ? ''
+              param 'gateway-credentials', cfg.httapi_credentials ? ''
+              param 'auth-scheme', cfg.httapi_authscheme ? 'basic'
+              param 'enable-cacert-check', cfg.httapi_cacert_check ? true
+              param 'enable-ssl-verifyhost', cfg.httpapi_verify_host ? true
+              param 'timeout', cfg.httapi_timeout ? 120
 
     section name:'dialplan', ->
 

@@ -151,6 +151,11 @@
                 <profile name="default">
                   <params>
                     <param name="gateway-url" value=""/>
+                    <param name="gateway-credentials" value=""/>
+                    <param name="auth-scheme" value="basic"/>
+                    <param name="enable-cacert-check" value="true"/>
+                    <param name="enable-ssl-verifyhost" value="true"/>
+                    <param name="timeout" value="120"/>
                   </params>
                 </profile>
               </profiles>
