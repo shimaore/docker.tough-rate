@@ -69,9 +69,9 @@ module.exports = renderable (cfg) ->
           profile_module = cfg.profile_module ? require './profile'
           for name, p of the_profiles
             p.timer_t1 ?= 250
-            p.timer_t4 ?= 4000
-            p.timer_t2 ?= 2000
-            p.timer_t1x64 ?= p.timer_t2
+            p.timer_t4 ?= 5000
+            p.timer_t2 ?= 4000
+            p.timer_t1x64 ?= 64*p.timer_t1
             p.local_ip = 'auto'
             p.name = name
             p.context ?= "context-#{name}"
