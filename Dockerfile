@@ -1,4 +1,4 @@
-FROM shimaore/thinkable-ducks:4.3.0
+FROM shimaore/thinkable-ducks:4.3.3
 
 MAINTAINER Stéphane Alnet <stephane@shimaore.net>
 
