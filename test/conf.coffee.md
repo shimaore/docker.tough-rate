@@ -15,7 +15,7 @@
       options = require '../local/example.json'
       config = (require '../conf/freeswitch') options
 
-      expect(config).to.equal '''
+      expected_config = '''
         <?xml version="1.0" encoding="utf-8" ?>
         <document type="freeswitch/xml">
           <section name="configuration">
@@ -137,9 +137,9 @@
                     <param name="stun-enabled" value="false"/>
                     <param name="stun-auto-disable" value="true"/>
                     <param name="timer-T1" value="250"/>
-                    <param name="timer-T1X64" value="2000"/>
-                    <param name="timer-T2" value="2000"/>
-                    <param name="timer-T4" value="4000"/>
+                    <param name="timer-T1X64" value="16000"/>
+                    <param name="timer-T2" value="4000"/>
+                    <param name="timer-T4" value="5000"/>
                   </settings>
                 </profile>
               </profiles>
@@ -173,3 +173,5 @@
         </document>
 
       '''.replace /\n */g, '\n'
+
+      expect(config).to.equal expected_config
