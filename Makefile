@@ -6,13 +6,17 @@
 #
 NAME=shimaore/`jq -r .name[7:] package.json`
 TAG=`jq -r .version package.json`
+THINKABLE_DUCKS_VERSION=`jq -r '.dependencies["thinkable-ducks"]' package.json`
 
-image:
+image: Dockerfile
 	docker build --rm=true -t ${NAME}:${TAG} .
 	docker tag -f ${NAME}:${TAG} ${REGISTRY}/${NAME}:${TAG}
 
 image-no-cache:
 	docker build --rm=true --no-cache -t ${NAME}:${TAG} .
+
+%: %.src
+	sed -e "s/THINKABLE_DUCKS_VERSION/${THINKABLE_DUCKS_VERSION}" $< >$@
 
 tests:
 	npm test
