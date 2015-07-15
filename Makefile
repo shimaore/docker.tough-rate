@@ -16,7 +16,7 @@ image-no-cache:
 	docker build --rm=true --no-cache -t ${NAME}:${TAG} .
 
 %: %.src
-	sed -e "s/THINKABLE_DUCKS_VERSION/${THINKABLE_DUCKS_VERSION}" $< >$@
+	sed -e "s/THINKABLE_DUCKS_VERSION/${THINKABLE_DUCKS_VERSION}/" $< >$@
 
 tests:
 	npm test
