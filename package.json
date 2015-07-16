@@ -17,7 +17,7 @@
     "nimble-direction": "^2.1.0",
     "pouchdb": "^3.6.0",
     "thinkable-ducks": "4.4.0",
-    "tough-rate": "^11.0.0"
+    "tough-rate": "^11.0.1"
   },
   "devDependencies": {
     "bumpy-lawyer": "^1.0.1",
