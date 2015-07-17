@@ -97,6 +97,9 @@ module.exports = renderable (cfg) ->
           extension name:"socket", ->
             condition field:'destination_number', expression:'^.+$', ->
               action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
+          extension name:'refer', ->
+            condition field:'${sip_refer_to}', expression:'^.+$', ->
+              action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
 
     if cfg.phrases?
       sound_dir = cfg.sound_dir ? '/opt/freeswitch/sounds'
