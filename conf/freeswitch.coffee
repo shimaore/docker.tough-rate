@@ -1,7 +1,7 @@
 {renderable} = require 'acoustic-line'
 
 module.exports = renderable (cfg) ->
-  {doctype,document,section,configuration,settings,params,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action,macros} = require 'acoustic-line'
+  {doctype,document,section,configuration,settings,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action} = require 'acoustic-line'
   name = cfg.name ? 'server'
   the_profiles = cfg.profiles ?
     sender:
@@ -77,19 +77,6 @@ module.exports = renderable (cfg) ->
             p.context ?= "context-#{name}"
             profile_module p
 
-      configuration name:'httapi.conf', ->
-        settings ->
-        profiles ->
-          # In mod_httapi.c/fetch_cache_data(), the profile_name might be set as a parameter, a setting, or defaults to `default`.
-          profile name:'default', ->
-            params ->
-              param 'gateway-url', cfg.httapi_url ? ''
-              param 'gateway-credentials', cfg.httapi_credentials ? ''
-              param 'auth-scheme', cfg.httapi_authscheme ? 'basic'
-              param 'enable-cacert-check', cfg.httapi_cacert_check ? true
-              param 'enable-ssl-verifyhost', cfg.httpapi_verify_host ? true
-              param 'timeout', cfg.httapi_timeout ? 120
-
     section name:'dialplan', ->
 
       for name, profile of the_profiles
@@ -97,13 +84,3 @@ module.exports = renderable (cfg) ->
           extension name:"socket", ->
             condition field:'destination_number', expression:'^.+$', ->
               action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
-          extension name:'refer', ->
-            condition field:'${sip_refer_to}', expression:'^.+$', ->
-              action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
-
-    if cfg.phrases?
-      sound_dir = cfg.sound_dir ? '/opt/freeswitch/sounds'
-      section 'phrases', ->
-        macros ->
-          for module in cfg.phrases
-            (module.include sound_dir) cfg

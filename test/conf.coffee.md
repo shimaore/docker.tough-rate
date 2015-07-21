@@ -1,16 +1,5 @@
     {expect} = require 'chai'
 
-    it 'The FreeSwitch configuration should accept phrases', ->
-      options = require '../local/example.json'
-      opts = {}
-      for own k,v of options
-        opts[k] = v
-      opts.phrases = [
-        require 'bumpy-lawyer/fr'
-      ]
-      config = (require '../conf/freeswitch') opts
-      expect(config.match /<action function="play" data="voicemail\/vm-record_greeting.wav"\/>/)
-
     it 'The FreeSwitch configuration', ->
       options = require '../local/example.json'
       config = (require '../conf/freeswitch') options
@@ -141,22 +130,6 @@
                     <param name="timer-T2" value="4000"/>
                     <param name="timer-T4" value="5000"/>
                   </settings>
-                </profile>
-              </profiles>
-            </configuration>
-            <configuration name="httapi.conf">
-              <settings>
-              </settings>
-              <profiles>
-                <profile name="default">
-                  <params>
-                    <param name="gateway-url" value=""/>
-                    <param name="gateway-credentials" value=""/>
-                    <param name="auth-scheme" value="basic"/>
-                    <param name="enable-cacert-check" value="true"/>
-                    <param name="enable-ssl-verifyhost" value="true"/>
-                    <param name="timeout" value="120"/>
-                  </params>
                 </profile>
               </profiles>
             </configuration>
