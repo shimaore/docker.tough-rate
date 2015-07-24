@@ -79,8 +79,8 @@ module.exports = renderable (cfg) ->
 
     section name:'dialplan', ->
 
-      for name, profile of the_profiles
+      for name, p of the_profiles
         context name:"context-#{name}", ->
           extension name:"socket", ->
             condition field:'destination_number', expression:'^.+$', ->
-              action application:'socket', data:"127.0.0.1:#{profile.socket_port} async full"
+              action application:'socket', data:"127.0.0.1:#{p.socket_port} async full"
