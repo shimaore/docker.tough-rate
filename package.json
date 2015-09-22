@@ -14,7 +14,7 @@
     "bluebird": "^2.9.34",
     "coffee-script": "^1.9.3",
     "debug": "^2.2.0",
-    "nimble-direction": "^2.1.2",
+    "nimble-direction": "^2.2.0",
     "pouchdb": "^3.6.0",
     "thinkable-ducks": "4.5.0",
     "tough-rate": "^11.1.0"
