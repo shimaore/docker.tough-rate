@@ -1,7 +1,7 @@
 {renderable} = require 'acoustic-line'
 
 module.exports = renderable (o) ->
-  {profile,settings,param} = require 'acoustic-line'
+  {profile,settings,param} = this
   profile name:"tough-rate-#{o.name}", ->
     settings ->
       param name:'user-agent-string', value:"tough-rate-#{o.name}-#{o.sip_port}"

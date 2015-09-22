@@ -1,7 +1,7 @@
-{renderable} = require 'acoustic-line'
+{renderable} = L = require 'acoustic-line'
 
 module.exports = renderable (cfg) ->
-  {doctype,document,section,configuration,settings,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action} = require 'acoustic-line'
+  {doctype,document,section,configuration,settings,param,modules,module,load,network_lists,list,node,global_settings,profiles,profile,mappings,map,context,extension,condition,action} = L
   name = cfg.name ? 'server'
   the_profiles = cfg.profiles ?
     sender:
@@ -75,7 +75,7 @@ module.exports = renderable (cfg) ->
             p.local_ip = 'auto'
             p.name = name
             p.context ?= "context-#{name}"
-            profile_module p
+            profile_module.call L, p
 
     section name:'dialplan', ->
 
