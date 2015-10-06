@@ -11,19 +11,19 @@
   },
   "dependencies": {
     "acoustic-line": "^1.5.0",
-    "bluebird": "^2.9.34",
-    "coffee-script": "^1.9.3",
+    "bluebird": "^2.10.2",
+    "coffee-script": "^1.10.0",
     "debug": "^2.2.0",
-    "nimble-direction": "^2.2.0",
-    "pouchdb": "^3.6.0",
-    "thinkable-ducks": "4.5.0",
-    "tough-rate": "^11.1.0"
+    "nimble-direction": "^2.2.1",
+    "pouchdb": "^4.0.3",
+    "thinkable-ducks": "5.0.0",
+    "tough-rate": "^11.2.0"
   },
   "devDependencies": {
-    "bumpy-lawyer": "^1.0.8",
-    "chai": "^3.2.0",
+    "bumpy-lawyer": "^1.0.11",
+    "chai": "^3.3.0",
     "chai-as-promised": "^5.1.0",
-    "mocha": "^2.2.5",
+    "mocha": "^2.3.3",
     "supervisord": "0.0.4"
   },
   "repository": {
