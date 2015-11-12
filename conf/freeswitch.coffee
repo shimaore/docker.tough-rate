@@ -6,7 +6,7 @@ module.exports = renderable (cfg) ->
   the_profiles = cfg.profiles ?
     sender:
       sip_port: 5060
-      socket_port: 5701
+      socket_port: 5701 # Outbound-Socket port
   modules_to_load = [
     'mod_logfile'
     'mod_event_socket'
@@ -51,6 +51,7 @@ module.exports = renderable (cfg) ->
         settings ->
           param name:'nat-map', value:false
           param name:'listen-ip', value:'127.0.0.1'
+          # Inbound-Socket port
           socket_port = cfg.socket_port ? 5702
           param name:'listen-port', value: socket_port
           param name:'password', value:'ClueCon'
