@@ -4,6 +4,7 @@
     {CallServer} = require 'tough-rate'
     assert = require 'assert'
     nimble = require 'nimble-direction'
+    LRU = require 'lru-cache'
     pkg = require '../package.json'
     debug = (require 'debug') "#{pkg.name}:server"
 
@@ -24,13 +25,26 @@
 Retrieve the ruleset (and ruleset database) for the given ruleset name.
 
       if cfg.prefix_local?
+
+Use a cache since the calls to `ruleset_of()` seem to not release the databases.
+
+        database_cache = LRU cfg.ruleset_database_cache_size ? 100
+
         cfg.ruleset_of = (x) ->
           cfg.prov.get "ruleset:#{cfg.sip_domain_name}:#{x}"
           .then (doc) ->
-            assert doc.database?, "Ruleset #{cfg.sip_domain_name}:#{x} should have a database field."
+            if not doc.database?
+              debug "Ruleset #{cfg.sip_domain_name}:#{x} should have a database field."
+              return {}
+
+            db = database_cache.get doc.database
+            if not db?
+              db = new PouchDB "#{cfg.prefix_local}/#{doc.database}"
+              database_cache.set doc.database, db
+
             data =
               ruleset: doc
-              ruleset_database: new PouchDB "#{cfg.prefix_local}/#{doc.database}"
+              ruleset_database: db
 
 We _must_ return an object, even if an error occurred. The router will detect no data is present and report the problem via SIP.
 
