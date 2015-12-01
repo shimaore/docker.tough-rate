@@ -10,7 +10,7 @@ module.exports = renderable (o) ->
       param name:'sip-trace', value:false
 
       param name:'sip-port', value:o.sip_port
-      param name:'bind-params', value:'transport=udp,tcp'
+      param name:'bind-params', value:'transport=udp' # tcp
 
       param name:'sip-ip', value:'0.0.0.0'
       param name:'ext-sip-ip', value:o.local_ip
@@ -24,7 +24,7 @@ module.exports = renderable (o) ->
       param name:'context', value:o.context
       param name:'auth-calls', value:false
       param name:'auth-all-packets', value:false
-      param name:'accept-blind-reg', value:'true'
+      param name:'accept-blind-reg', value:false
       param name:'accept-blind-auth', value:true
       param name:'sip-options-respond-503-on-busy', value:false
       param name:'pass-callee-id', value:false
@@ -33,16 +33,16 @@ module.exports = renderable (o) ->
       param name:'manage-presence', value:false
       param name:'manage-shared-appearance', value:false
 
-      param name:'enable-soa', value:'true'
+      param name:'enable-soa', value:false
       param name:'inbound-codec-negotiation', value:'scrooge'
       param name:'inbound-late-negotiation', value:true
 
-      param name:'inbound-codec-prefs', value:'PCMA,PCMU'
-      param name:'outbound-codec-prefs', value:'PCMA,PCMU'
+      param name:'inbound-codec-prefs', value:o.inbound_codec ? 'PCMA,PCMU'
+      param name:'outbound-codec-prefs', value:o.outbound_codec ? 'PCMA,PCMU'
       param name:'renegotiate-codec-on-reinvite', value:true
       param name:'inbound-bypass-media', value:true
       param name:'inbound-proxy-media', value:false
-      param name:'media-option', value:'bypass-media-after-att-xfer'
+      param name:'media-option', value:'none'
 
       param name:'inbound-zrtp-passthru', value:false
       param name:'disable-transcoding', value:true
