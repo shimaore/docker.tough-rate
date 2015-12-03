@@ -10,8 +10,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "bluebird": "^3.0.5",
-    "coffee-script": "^1.10.0",
+    "bluebird": "^3.0.6",
     "debug": "^2.2.0",
     "lru-cache": "^3.2.0",
     "nimble-direction": "^4.0.4",
@@ -23,6 +22,7 @@
     "bumpy-lawyer": "^2.0.2",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
+    "coffee-script": "^1.10.0",
     "mocha": "^2.3.4",
     "supervisord": "0.0.4"
   },
