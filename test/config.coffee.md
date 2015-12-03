@@ -9,7 +9,7 @@
 
     it.skip 'should write proper ACLS', ->
       run = require '../config.coffee.md'
-      options = require '../local/example.json'
+      options = require './example.json'
       run options
       .then ->
         fs.readFileAsync '../conf/acl.conf.xml', 'utf-8'

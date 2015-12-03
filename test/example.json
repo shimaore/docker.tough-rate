@@ -5,6 +5,12 @@
 , "profile": "tough-rate-sender"
 , "host": "host.local"
 , "default_outbound_route": "the_default_outbound_route"
+, "profiles": {
+    "sender": {
+      "sip_port": 5760
+    , "socket_port": 5701
+    }
+  }
 , "acls": {
     "default": [
       "172.17.42.0/8"
