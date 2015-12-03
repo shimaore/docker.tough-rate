@@ -34,7 +34,7 @@ Default `use` list for tough-rate.
 Default FreeSwitch configuration
 
     debug 'Loading conf/freeswitch'
-    cfg.freeswitch = require './conf/freeswitch'
+    cfg.freeswitch = require 'tough-rate/conf/freeswitch'
 
     debug 'Loading thinkable-ducks'
     ducks = require 'thinkable-ducks'
