@@ -4,3 +4,4 @@ conf/freeswitch.xml
 *.js
 *.js.map
 npm-debug.log
+Dockerfile
