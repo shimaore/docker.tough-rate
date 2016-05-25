@@ -17,7 +17,7 @@
     "lru-cache": "^4.0.1",
     "nimble-direction": "^4.1.2",
     "pouchdb": "^5.3.2",
-    "thinkable-ducks": "7.0.1",
+    "thinkable-ducks": "7.0.2",
     "tough-rate": "^14.0.0"
   },
   "devDependencies": {
