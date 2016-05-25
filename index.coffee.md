@@ -11,6 +11,7 @@ Default `use` list for tough-rate.
 
     debug 'cfg.use'
     cfg.use = [
+      'huge-play/middleware/setup'
       './middleware/config'
       './middleware/server'
       'tough-rate/middleware/setup'

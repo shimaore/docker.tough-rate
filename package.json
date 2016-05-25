@@ -11,20 +11,21 @@
     "test": "mocha"
   },
   "dependencies": {
-    "bluebird": "^3.3.4",
+    "bluebird": "^3.4.0",
     "debug": "^2.2.0",
-    "lru-cache": "^4.0.0",
+    "huge-play": "^12.1.0",
+    "lru-cache": "^4.0.1",
     "nimble-direction": "^4.1.2",
-    "pouchdb": "^5.3.0",
-    "thinkable-ducks": "6.0.14",
-    "tough-rate": "^13.0.2"
+    "pouchdb": "^5.3.2",
+    "thinkable-ducks": "7.0.0",
+    "tough-rate": "^14.0.0"
   },
   "devDependencies": {
-    "bumpy-lawyer": "^2.1.2",
+    "bumpy-lawyer": "^2.2.1",
     "chai": "^3.5.0",
-    "chai-as-promised": "^5.2.0",
+    "chai-as-promised": "^5.3.0",
     "coffee-script": "^1.10.0",
-    "mocha": "^2.4.5",
+    "mocha": "^2.5.3",
     "supervisord": "0.1.0"
   },
   "repository": {
