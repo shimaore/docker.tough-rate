@@ -15,7 +15,6 @@
     @server_pre = ->
       cfg = @cfg
       assert cfg.sip_domain_name?, 'Missing `sip_domain_name` option.'
-      assert cfg.profile? , 'Missing `profile` option.'
 
       debug "Booting #{pkg.name} #{pkg.version}.", cfg
 
