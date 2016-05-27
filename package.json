@@ -14,7 +14,7 @@
     "bluebird": "^3.4.0",
     "debug": "^2.2.0",
     "lru-cache": "^4.0.1",
-    "nimble-direction": "^4.2.0",
+    "nimble-direction": "^4.2.1",
     "pouchdb": "^5.3.2",
     "thinkable-ducks": "7.0.2",
     "tough-rate": "^14.2.0"
