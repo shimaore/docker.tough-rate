@@ -69,6 +69,7 @@ Push the `tough-rate` design document to the master provisioning database
           doc.filter = couch.replication_filter
           doc.query_params =
             sip_domain_name: cfg.sip_domain_name
+          doc.comment += " for #{pkg.name}"
 
       .then ->
 
