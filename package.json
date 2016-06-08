@@ -15,9 +15,9 @@
     "debug": "^2.2.0",
     "lru-cache": "^4.0.1",
     "nimble-direction": "^4.2.1",
-    "pouchdb": "^5.3.2",
+    "pouchdb": "^5.4.1",
     "thinkable-ducks": "7.0.4",
-    "tough-rate": "^14.4.1"
+    "tough-rate": "^14.5.1"
   },
   "devDependencies": {
     "bumpy-lawyer": "^2.2.1",
